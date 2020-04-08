@@ -7,8 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ConnectionPropertiesReader {
     public Properties readProperties(String filepath) {
@@ -19,8 +17,7 @@ public class ConnectionPropertiesReader {
             BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8);
             properties.load(reader);
         } catch (IOException e) {
-            Logger.getLogger(ConnectionPropertiesReader.class.getName()).log(
-                    Level.SEVERE, null, e);
+            e.printStackTrace();
         }
         return properties;
     }

@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class ConnectionFactory {
-    private String filepath = "online-shop-agnostic-toystore/data/database.properties";
+    private String filepath = "src/main/data/database.properties";
     private String url;
     private String user;
     private String password;
