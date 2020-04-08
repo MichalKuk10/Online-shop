@@ -5,13 +5,27 @@ import org.postgresql.Driver;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class ConnectionFactory {
-    public static final String url = "jdbc:postgresql://localhost:5432/application_process_agnostic";
-    public static final String user = "karolina";
-    public static final String password = "cactus";
+    private String filepath = "online-shop-agnostic-toystore/data/database.properties";
+    private String url;
+    private String user;
+    private String password;
 
-    public static Connection getConnection() {
+    public ConnectionFactory() {
+        ConnectionPropertiesReader reader = new ConnectionPropertiesReader();
+        Properties properties = reader.readProperties(filepath);
+        readDatabaseLoginCredentials(properties);
+    }
+
+    private void readDatabaseLoginCredentials(Properties properties) {
+        url = properties.getProperty("db.url");
+        user = properties.getProperty("db.user");
+        password = properties.getProperty("db.password");
+    }
+
+    public Connection getConnection() {
         try {
             DriverManager.registerDriver(new Driver());
             return DriverManager.getConnection(url, user, password);
