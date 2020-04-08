@@ -8,4 +8,5 @@ public interface UserDAOInterface {
     User getUserByEmail(String email);
 
     boolean checkIfPasswordMatchesEmail(String email, String password);
+    
 }

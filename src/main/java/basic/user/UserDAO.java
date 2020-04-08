@@ -27,7 +27,6 @@ public class UserDAO implements UserDAOInterface {
             e.printStackTrace();
         }
         return false;
-
     }
 
     @Override
