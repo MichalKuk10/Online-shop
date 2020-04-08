@@ -9,6 +9,11 @@ public class User {
     String phoneNumber;
     String address;
 
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
     public User(int userId, String email, String password, String firstName, String lastName, String phoneNumber, String address) {
         this.userId = userId;
         this.email = email;
@@ -26,6 +31,8 @@ public class User {
     public void setUserId(int userId) {
         this.userId = userId;
     }
+
+    public String getEmail() { return email; }
 
     public void setEmail(String email) {
         this.email = email;
