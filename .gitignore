@@ -1,7 +1,5 @@
-.idea
-
-# Local database login properties
-data/database.properties
+.idea/
+data/
 
 # User-specific stuff
 .idea/**/workspace.xml
