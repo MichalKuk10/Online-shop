@@ -5,6 +5,8 @@ public interface UserDAOInterface {
 
     boolean updateUser(User user);
 
+    boolean checkIfEmailInDatabase(String email);
+
     User getUserByEmail(String email);
 
     boolean checkIfPasswordMatchesEmail(String email, String password);

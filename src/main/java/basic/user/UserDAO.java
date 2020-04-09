@@ -55,6 +55,24 @@ public class UserDAO implements UserDAOInterface {
     }
 
     @Override
+    public boolean checkIfEmailInDatabase(String email) {
+        ConnectionFactory factory = new ConnectionFactory();
+        Connection connection = factory.getConnection();
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT email FROM users WHERE email = ?;");
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
     public boolean checkIfPasswordMatchesEmail(String givenEmail, String givenPassword) {
         ConnectionFactory factory = new ConnectionFactory();
         Connection connection = factory.getConnection();
@@ -82,8 +100,27 @@ public class UserDAO implements UserDAOInterface {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE email = ?;");
             statement.setString(1, email);
             ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return extractUserFromResultSet(resultSet);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+
+        return null;
     }
 
-    // see if email exists in database - potrzebne zarówno do logowania jak i do sprawdzenia przy rejestracji
+    private User extractUserFromResultSet(ResultSet resultSet) throws SQLException {
+        User user = new User(resultSet.getString("email"), resultSet.getString("password"));
+        user.setUserId(resultSet.getInt("user_id"));
+        user.setFirstName(resultSet.getString("first_name"));
+        user.setLastName(resultSet.getString("last_name"));
+        user.setPhoneNumber(resultSet.getString("phone_number"));
+        user.setAddress(resultSet.getString("address"));
+        user.setRole(resultSet.getString("user_role"));
+        user.setAgreedToNewsletter(resultSet.getBoolean("newsletter_subscription"));
+
+        return user;
+    }
 }
