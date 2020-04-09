@@ -8,13 +8,15 @@ public class User {
     String lastName;
     String phoneNumber;
     String address;
+    boolean agreedToNewsletter;
 
     public User(String email, String password) {
         this.email = email;
         this.password = password;
+        this.agreedToNewsletter = false;
     }
 
-    public User(int userId, String email, String password, String firstName, String lastName, String phoneNumber, String address) {
+    public User(int userId, String email, String password, String firstName, String lastName, String phoneNumber, String address, boolean agreedToNewsletter) {
         this.userId = userId;
         this.email = email;
         this.password = password;
@@ -22,6 +24,7 @@ public class User {
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.address = address;
+        this.agreedToNewsletter = agreedToNewsletter;
     }
 
     public int getUserId() {
@@ -76,6 +79,14 @@ public class User {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public boolean isAgreedToNewsletter() {
+        return agreedToNewsletter;
+    }
+
+    public void setAgreedToNewsletter(boolean agreedToNewsletter) {
+        this.agreedToNewsletter = agreedToNewsletter;
     }
 }
 
