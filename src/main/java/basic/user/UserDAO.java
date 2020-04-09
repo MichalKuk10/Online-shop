@@ -20,6 +20,8 @@ public class UserDAO implements UserDAOInterface {
             statement.setString(2, user.getPassword());
 
             int i = statement.executeUpdate();
+            updateIdInUserObject(user);
+
             if (i == 1) {
                 return true;
             }
@@ -80,10 +82,11 @@ public class UserDAO implements UserDAOInterface {
             PreparedStatement statement = connection.prepareStatement("SELECT password FROM users WHERE email = ?;");
             statement.setString(1, givenEmail);
             ResultSet resultSet = statement.executeQuery();
-            String dbPassword = resultSet.getString("password");
-
-            if (dbPassword.equals(givenPassword)) {
-                return true;
+            if (resultSet.next()) {
+                String dbPassword = resultSet.getString("password");
+                if (dbPassword.equals(givenPassword)) {
+                    return true;
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -122,5 +125,21 @@ public class UserDAO implements UserDAOInterface {
         user.setAgreedToNewsletter(resultSet.getBoolean("newsletter_subscription"));
 
         return user;
+    }
+
+    private void updateIdInUserObject(User user) {
+        ConnectionFactory factory = new ConnectionFactory();
+        Connection connection = factory.getConnection();
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE email LIKE ?;");
+            statement.setString(1, user.getEmail());
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                int id = resultSet.getInt("user_id");
+                user.setUserId(id);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
