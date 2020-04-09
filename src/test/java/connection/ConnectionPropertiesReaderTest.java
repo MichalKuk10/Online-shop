@@ -1,11 +1,14 @@
 package connection;
 
+
 import org.junit.jupiter.api.Test;
+
 import java.util.Properties;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class ConnectionPropertiesReaderTest {
+
+public class ConnectionPropertiesReaderTest {
 
     @Test
     public void should_read_properties_file_correctly() {
@@ -20,6 +23,13 @@ class ConnectionPropertiesReaderTest {
         assertEquals(testPropertyValue, expectedPropertyValue);
     }
 }
+
+
+
+
+
+
+
 
     //url = properties.getProperty("db.url");
     //    public Properties readProperties(String filepath) {
