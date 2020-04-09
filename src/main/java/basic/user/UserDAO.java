@@ -4,6 +4,7 @@ import connection.ConnectionFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserDAO implements UserDAOInterface {
@@ -54,13 +55,35 @@ public class UserDAO implements UserDAOInterface {
     }
 
     @Override
-    public User getUserByEmail(String email) {
-        return null;
-    }
+    public boolean checkIfPasswordMatchesEmail(String givenEmail, String givenPassword) {
+        ConnectionFactory factory = new ConnectionFactory();
+        Connection connection = factory.getConnection();
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT password FROM users WHERE email = ?;");
+            statement.setString(1, givenEmail);
+            ResultSet resultSet = statement.executeQuery();
+            String dbPassword = resultSet.getString("password");
 
-    @Override
-    public boolean checkIfPasswordMatchesEmail(String email, String password) {
+            if (dbPassword.equals(givenPassword)) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 
+    @Override
+    public User getUserByEmail(String email) {
+        ConnectionFactory factory = new ConnectionFactory();
+        Connection connection = factory.getConnection();
+
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE email = ?;");
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+        }
+    }
+
+    // see if email exists in database - potrzebne zarówno do logowania jak i do sprawdzenia przy rejestracji
 }
