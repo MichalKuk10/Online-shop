@@ -1,15 +1,15 @@
 package basic.user;
 
 public class User {
-    int userId;
-    String email;
-    String password;
-    String firstName;
-    String lastName;
-    String phoneNumber;
-    String address;
-    String role;
-    boolean agreedToNewsletter;
+    private int userId;
+    private String email;
+    private String password;
+    private String firstName;
+    private String lastName;
+    private String phoneNumber;
+    private String address;
+    private String role;
+    private boolean agreedToNewsletter;
 
     public User(String email, String password) {
         this.email = email;
