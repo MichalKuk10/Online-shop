@@ -34,14 +34,13 @@ CREATE TABLE products (
 CREATE TABLE orders (
     order_id SERIAL PRIMARY KEY,
     "date" date,
-    "value" float(4),
 	user_id integer,
 	CONSTRAINT andrzej FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
 CREATE TABLE order_products (
     order_product_id SERIAL PRIMARY KEY,
-    amount integer CONSTRAINT positive_number CHECK (amount > 0) NOT NULL ,
+    quantity integer CONSTRAINT positive_number CHECK (quantity > 0) NOT NULL ,
 	order_id integer,
 	CONSTRAINT zbigniew FOREIGN KEY (order_id)  REFERENCES orders(order_id),
     product_id integer ,
@@ -78,3 +77,78 @@ insert into users (email, password, first_name, last_name, phone_number, address
 insert into users (email, password, first_name, last_name, phone_number, address, user_role, newsletter_subscription) values ('Benedict.Hamilton@gmail.com', 'Su2Ne6#?', 'Benedict', 'Hamilton', '17468325', 'Thatched Cottage, Chapel Hill, Blunsdon SN26 7BL', 'customer', true);
 insert into users (email, password, first_name, last_name, phone_number, address, user_role, newsletter_subscription) values ('Aston.Francis@gmail.com', '@<DI76js', 'Aston', 'Francis', '35194628', 'Greenhills Lodge, Stafford Lane, Codsall WV8 2HN', 'customer', false);
 insert into users (email, password, first_name, last_name, phone_number, address, user_role, newsletter_subscription) values ('Ernest.Watts@gmail.com', 'oc&J$O45', 'Ernest', 'Watts', '23549867', '1 Y Gorlan, Goodwick SA64 0BB', 'customer', true);
+
+insert into product_categories (name) values ('baby toys');
+insert into product_categories (name) values ('cuddly toys');
+insert into product_categories (name) values ('crafts and drawing');
+insert into product_categories (name) values ('dolls');
+insert into product_categories (name) values ('building blocks');
+insert into product_categories (name) values ('figures & play sets');
+insert into product_categories (name) values ('games');
+insert into product_categories (name) values ('outdoortoys');
+insert into product_categories (name) values ('electronics');
+insert into product_categories (name) values ('party');
+
+insert into products (product_category_id, name, brand_name, age_category, price) values (1, 'Teetcher for babies', 'Vtech', '1', 16.95);
+insert into products (product_category_id, name, brand_name, age_category, price) values (1, 'Ball pool', 'Studio 100', '2', 21.99);
+insert into products (product_category_id, name, brand_name, age_category, price) values (1, 'My first steering wheel', 'Vtech', '2', 19.90);
+insert into products (product_category_id, name, brand_name, age_category, price) values (2, 'Plush red heart', 'LG-Imports', '2', 0.95);
+insert into products (product_category_id, name, brand_name, age_category, price) values (2, 'Plush teddy bear with heart', 'LG-Imports', '2', 6.95);
+insert into products (product_category_id, name, brand_name, age_category, price) values (3, 'Watercolour set with (12 colours)', 'Grafix', '5', 1.50);
+insert into products (product_category_id, name, brand_name, age_category, price) values (3, 'Clay set (12 pieces)', 'Free and easy', '6', 1.20);
+insert into products (product_category_id, name, brand_name, age_category, price) values (4, 'Barbie doll', 'Barbie', '6', 23.95);
+insert into products (product_category_id, name, brand_name, age_category, price) values (4, 'Baby doll', 'Vtech', '4', 21.95);
+insert into products (product_category_id, name, brand_name, age_category, price) values (5, 'LEGO lunch set', 'LEGO', '8', 9.95);
+insert into products (product_category_id, name, brand_name, age_category, price) values (5, '3D wooden house set', 'Creotime', '12', 13.65);
+insert into products (product_category_id, name, brand_name, age_category, price) values (6, 'Farm animals (20 plastic figures)', 'Johntoy', '10', 7.35);
+insert into products (product_category_id, name, brand_name, age_category, price) values (6, 'Running Dinosaur', 'Toi-Toys', '7', 12.95);
+insert into products (product_category_id, name, brand_name, age_category, price) values (7, 'Monopoly', 'Hasbro', '12', 30);
+insert into products (product_category_id, name, brand_name, age_category, price) values (7, 'Playing cards set', 'LG-Imports', '8', 1);
+insert into products (product_category_id, name, brand_name, age_category, price) values (8, 'Star bubbleblow ', 'Free and easy', '6', 2);
+insert into products (product_category_id, name, brand_name, age_category, price) values (8, 'Football ', 'TOM', '5', 8.5);
+insert into products (product_category_id, name, brand_name, age_category, price) values (9, 'Electronic keyboard', 'Bontempi ', '9', 23);
+insert into products (product_category_id, name, brand_name, age_category, price) values (9, 'My first computer', 'Hape', '8', 12);
+insert into products (product_category_id, name, brand_name, age_category, price) values (10, 'Party hat', 'LG-Imports', '5', 2);
+insert into products (product_category_id, name, brand_name, age_category, price) values (10, 'Balloon set (8 baloons)', 'Free and easy', '8', 5);
+
+insert into orders (user_id, date) values (12, '2019-01-15');
+insert into orders (user_id, date) values (8, '2020-02-14');
+insert into orders (user_id, date) values (26, '2020-03-13');
+insert into orders (user_id, date) values (11, '2019-04-12');
+insert into orders (user_id, date) values (25, '2019-05-11');
+insert into orders (user_id, date) values (15, '2018-06-10');
+insert into orders (user_id, date) values (18, '2020-07-09');
+insert into orders (user_id, date) values (28, '2019-08-08');
+insert into orders (user_id, date) values (23, '2020-09-07');
+insert into orders (user_id, date) values (26, '2018-10-06');
+
+insert into order_products (order_id, product_id, quantity) values (1, 7, 1);
+insert into order_products (order_id, product_id, quantity) values (1, 6, 2);
+insert into order_products (order_id, product_id, quantity) values (1, 10, 2);
+insert into order_products (order_id, product_id, quantity) values (2, 13, 3);
+insert into order_products (order_id, product_id, quantity) values (2, 18, 2);
+insert into order_products (order_id, product_id, quantity) values (2, 6, 3);
+insert into order_products (order_id, product_id, quantity) values (3, 19, 1);
+insert into order_products (order_id, product_id, quantity) values (3, 12, 3);
+insert into order_products (order_id, product_id, quantity) values (3, 14, 3);
+insert into order_products (order_id, product_id, quantity) values (4, 2, 3);
+insert into order_products (order_id, product_id, quantity) values (4, 17, 3);
+insert into order_products (order_id, product_id, quantity) values (4, 6, 2);
+insert into order_products (order_id, product_id, quantity) values (5, 15, 2);
+insert into order_products (order_id, product_id, quantity) values (5, 12, 1);
+insert into order_products (order_id, product_id, quantity) values (5, 18, 3);
+insert into order_products (order_id, product_id, quantity) values (6, 16, 3);
+insert into order_products (order_id, product_id, quantity) values (6, 4, 2);
+insert into order_products (order_id, product_id, quantity) values (6, 13, 2);
+insert into order_products (order_id, product_id, quantity) values (7, 4, 1);
+insert into order_products (order_id, product_id, quantity) values (7, 10, 1);
+insert into order_products (order_id, product_id, quantity) values (7, 16, 1);
+insert into order_products (order_id, product_id, quantity) values (8, 4, 1);
+insert into order_products (order_id, product_id, quantity) values (8, 11, 2);
+insert into order_products (order_id, product_id, quantity) values (8, 2, 3);
+insert into order_products (order_id, product_id, quantity) values (9, 18, 3);
+insert into order_products (order_id, product_id, quantity) values (9, 4, 2);
+insert into order_products (order_id, product_id, quantity) values (9, 18, 2);
+insert into order_products (order_id, product_id, quantity) values (10, 19, 1);
+insert into order_products (order_id, product_id, quantity) values (10, 12, 2);
+insert into order_products (order_id, product_id, quantity) values (10, 14, 3);
