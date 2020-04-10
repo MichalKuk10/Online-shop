@@ -9,10 +9,14 @@ import java.sql.SQLException;
 
 public class UserDAO implements UserDAOInterface {
 
+    private Connection getConnection() {
+        ConnectionFactory factory = new ConnectionFactory();
+        return factory.getConnection();
+    }
+
     @Override
     public boolean insertUser(User user) {
-        ConnectionFactory factory = new ConnectionFactory();
-        Connection connection = factory.getConnection();
+        Connection connection = getConnection();
 
         try {
             PreparedStatement statement = connection.prepareStatement("INSERT INTO users (email, password, user_role, newsletter_subscription) VALUES (?, ?, 'customer', false);");
@@ -33,8 +37,7 @@ public class UserDAO implements UserDAOInterface {
 
     @Override
     public boolean updateUser(User user) {
-        ConnectionFactory factory = new ConnectionFactory();
-        Connection connection = factory.getConnection();
+        Connection connection = getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement("UPDATE users SET email = ?, password = ?, first_name = ?, last_name = ?, phone_number = ?, address = ?, newsletter_subscription = ? WHERE user_id = ?;");
             statement.setString(1, user.getEmail());
@@ -58,8 +61,7 @@ public class UserDAO implements UserDAOInterface {
 
     @Override
     public boolean checkIfEmailInDatabase(String email) {
-        ConnectionFactory factory = new ConnectionFactory();
-        Connection connection = factory.getConnection();
+        Connection connection = getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT email FROM users WHERE email = ?;");
             statement.setString(1, email);
@@ -76,8 +78,7 @@ public class UserDAO implements UserDAOInterface {
 
     @Override
     public boolean checkIfPasswordMatchesEmail(String givenEmail, String givenPassword) {
-        ConnectionFactory factory = new ConnectionFactory();
-        Connection connection = factory.getConnection();
+        Connection connection = getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT password FROM users WHERE email = ?;");
             statement.setString(1, givenEmail);
@@ -96,8 +97,7 @@ public class UserDAO implements UserDAOInterface {
 
     @Override
     public User getUserByEmail(String email) {
-        ConnectionFactory factory = new ConnectionFactory();
-        Connection connection = factory.getConnection();
+        Connection connection = getConnection();
 
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE email = ?;");
@@ -128,8 +128,7 @@ public class UserDAO implements UserDAOInterface {
     }
 
     private void updateIdInUserObject(User user) {
-        ConnectionFactory factory = new ConnectionFactory();
-        Connection connection = factory.getConnection();
+        Connection connection = getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE email LIKE ?;");
             statement.setString(1, user.getEmail());
