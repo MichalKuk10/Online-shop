@@ -1,14 +1,14 @@
 package main_controllers;
 
-import controllers.AccessController;
+import controllers.PurchaseController;
 import input_manager.InputManager;
 
 public class MainControllerClient implements MainControllerUser {
 
     // example code to show how relations between main controller and other controllers might look like:
 
-    private final AccessController accessController = new AccessController();
-    private final String[] menuOptions = {"Go to access controller", "Print some example data", "Quit"};
+    private final PurchaseController purchaseController = new PurchaseController();
+    private final String[] menuOptions = {"Go to purchase controller", "Print some example data", "Quit"};
     private final InputManager input = new InputManager();
 
     public void mainMenu() {
@@ -23,7 +23,7 @@ public class MainControllerClient implements MainControllerUser {
     private void reactToUserInput(int number) {
         switch(number) {
             case 1:
-                accessController.accessControllerMenu();
+                purchaseController.purchaseControllerMenu();
                 break;
             case 2:
                 System.out.println("Some example data");
