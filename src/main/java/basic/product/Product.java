@@ -1,4 +1,80 @@
 package basic.product;
 
 public class Product {
+
+    Integer productId;
+    String name;
+    int categoryId;
+    String brand;
+    double price;
+    int minAge;
+
+    public Product(int productId, String name, int categoryId, String brand, double price, int minAge) {
+        this.productId = productId;
+        this.name = name;
+        this.categoryId = categoryId;
+        this.brand = brand;
+        this.price = price;
+        this.minAge = minAge;
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public int getMinAge() {
+        return minAge;
+    }
+
+    public void setMinAge(int minAge) {
+        this.minAge = minAge;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + productId +
+                ", name='" + name + '\'' +
+                ", categoryId='" + categoryId + '\'' +
+                ", brand='" + brand + '\'' +
+                ", price=" + price +
+                ", minAge=" + minAge +
+                '}';
+    }
 }
