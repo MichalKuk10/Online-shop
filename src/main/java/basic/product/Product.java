@@ -2,12 +2,12 @@ package basic.product;
 
 public class Product {
 
-    Integer productId;
-    String name;
-    int categoryId;
-    String brand;
-    double price;
-    int minAge;
+    private Integer productId;
+    private String name;
+    private int categoryId;
+    private String brand;
+    private double price;
+    private int minAge;
 
     public Product(int productId, String name, int categoryId, String brand, double price, int minAge) {
         this.productId = productId;

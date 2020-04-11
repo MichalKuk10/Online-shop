@@ -5,24 +5,25 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class ProductDAOAdmin implements ProductDAOInterface {
+    private Connection getConnection() {
+        ConnectionFactory factory = new ConnectionFactory();
+        return factory.getConnection();
+    }
 
     @Override
     public ArrayList<Product> getAllProducts() throws SQLException {
-        ConnectionFactory conn = new ConnectionFactory();
-        Connection connection = conn.getConnection();
+        Connection connection = getConnection();
         ArrayList<Product> productsList = new ArrayList<>();
-        ResultSet rs = null;
-        Statement statement = null;
+        ResultSet rs;
 
         try {
-            String query = "SELECT * FROM products;";
-            statement = connection.createStatement();
-            rs = statement.executeQuery(query);
+            PreparedStatement statement  = connection.prepareStatement("SELECT * FROM products;");
+            rs =  statement.executeQuery();
 
             while (rs.next()) {
                 Product product = new Product(rs.getInt("product_id"), rs.getString("name"),
                         rs.getInt("product_category_id"), rs.getString("brand_name"), rs.getDouble("price"),
-                        rs.getInt("min_age"));
+                        rs.getInt("age_category"));
                 productsList.add(product);
             }
         } catch (SQLException e) {
@@ -35,19 +36,17 @@ public class ProductDAOAdmin implements ProductDAOInterface {
 
     @Override
     public Product getProductById(int id) throws SQLException {
-        ConnectionFactory conn = new ConnectionFactory();
-        Connection connection = conn.getConnection();
-        Statement statement =  null;
-        ResultSet rs = null;
+        Connection connection = getConnection();
         Product product = null;
 
         try {
-            statement = connection.createStatement();
-            rs = statement.executeQuery("SELECT * FROM products WHERE product_id = " + id + ";");
-            product = new Product(rs.getInt("product_id"), rs.getString("name"),
-                    rs.getInt("product_category_id"), rs.getString("brand_name"), rs.getDouble("price"),
-                    rs.getInt("min_age"));
-
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM products WHERE product_id =" + id + ";");
+            ResultSet rs = statement.executeQuery();
+            while(rs.next()) {
+                product = new Product(rs.getInt("product_id"), rs.getString("name"),
+                        rs.getInt("product_category_id"), rs.getString("brand_name"), rs.getDouble("price"),
+                        rs.getInt("age_category"));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -58,8 +57,7 @@ public class ProductDAOAdmin implements ProductDAOInterface {
 
     @Override
     public ArrayList<Product> getProductsByCategory(int categoryId) throws SQLException {
-        ConnectionFactory conn = new ConnectionFactory();
-        Connection connection = conn.getConnection();
+        Connection connection = getConnection();
         ArrayList<Product> productsList = new ArrayList<>();
         ResultSet rs = null;
 
@@ -70,7 +68,7 @@ public class ProductDAOAdmin implements ProductDAOInterface {
             while (rs.next()) {
                 Product product = new Product(rs.getInt("product_id"), rs.getString("name"),
                         rs.getInt("product_category_id"), rs.getString("brand_name"), rs.getDouble("price"),
-                        rs.getInt("min_age"));
+                        rs.getInt("age_category"));
                 productsList.add(product);
             }
         } catch (SQLException e) {
@@ -82,15 +80,14 @@ public class ProductDAOAdmin implements ProductDAOInterface {
         return  productsList;
     }
 
-    public boolean insertNewProduct(Product product) throws SQLException {
-        ConnectionFactory conn = new ConnectionFactory();
-        Connection connection = conn.getConnection();
+    public boolean insertNewProduct(int productCategoryId, String name, String brand_name, float price, int age_category) throws SQLException {
+        Connection connection = getConnection();
 
         try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO products (productId, name, brand, price, minAge )" +
-                    "VALUES (" + product.getProductId() + "," + product.getName() + ","  + product.getBrand() + "," +
-                    product.getPrice() + "," + product.getMinAge() + ");");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO products (product_category_id, name, brand_name, price, age_category)" +
+                    "VALUES (" + productCategoryId + ",'" + name + "', '"  + brand_name + "'," + price  + "," + age_category + ");");
                     statement.executeUpdate();
+                    System.out.println("This product has been added successfully to database! ");
                     return true;
 
         } catch (SQLException e) {
@@ -102,8 +99,7 @@ public class ProductDAOAdmin implements ProductDAOInterface {
         } }
 
     public void deleteProductById(int id) throws SQLException {
-        ConnectionFactory conn = new ConnectionFactory();
-        Connection connection = conn.getConnection();
+        Connection connection = getConnection();
 
         try {
             Statement stmt = connection.createStatement();

@@ -12,10 +12,10 @@ class ProductDAOClientTest {
     public void shouldCheckIfReturnProductById() throws SQLException {
         //given
         ProductDAOClient prod = new ProductDAOClient();
-        Product product = new Product(22, "TOy", 1, "re", 11.0,2);
+        Product product = new Product(20, "Party hat", 10, "LG-Imports", 2,5);
 
         //when
-        Product result  = prod.getProductById(22);
+        Product result  = prod.getProductById(2);
 
         //then
 

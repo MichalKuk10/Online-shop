@@ -9,10 +9,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class ProductDAOClient implements ProductDAOInterface {
+    private Connection getConnection() {
+        ConnectionFactory factory = new ConnectionFactory();
+        return factory.getConnection();
+    }
+
     @Override
     public ArrayList<Product> getAllProducts() throws SQLException {
-        ConnectionFactory conn = new ConnectionFactory();
-        Connection connection = conn.getConnection();
+        Connection connection = getConnection();
         ArrayList<Product> productsList = new ArrayList<>();
         ResultSet rs = null;
         Statement statement = null;
@@ -24,8 +28,8 @@ public class ProductDAOClient implements ProductDAOInterface {
 
             while (rs.next()) {
                 Product product = new Product(rs.getInt("product_id"), rs.getString("name"),
-                        rs.getInt("product_category_id"), rs.getString("brand_name"), rs.getDouble("price"),
-                        rs.getInt("min_age"));
+                        rs.getInt("product_category_id"), rs.getString("brand_name"), rs.getFloat("price"),
+                        rs.getInt("age_category"));
                 productsList.add(product);
             }
         } catch (SQLException e) {
@@ -38,8 +42,7 @@ public class ProductDAOClient implements ProductDAOInterface {
 
     @Override
     public Product getProductById(int id) throws SQLException {
-        ConnectionFactory conn = new ConnectionFactory();
-        Connection connection = conn.getConnection();
+        Connection connection = getConnection();
         Statement statement =  null;
         ResultSet rs = null;
         Product product = null;
@@ -47,9 +50,11 @@ public class ProductDAOClient implements ProductDAOInterface {
         try {
             statement = connection.createStatement();
             rs = statement.executeQuery("SELECT * FROM products WHERE product_id = " + id + ";");
-            product = new Product(rs.getInt("product_id"), rs.getString("name"),
-                    rs.getInt("product_category_id"), rs.getString("brand_name"), rs.getDouble("price"),
-                    rs.getInt("age_category"));
+            while(rs.next()) {
+                product = new Product(rs.getInt("product_id"), rs.getString("name"),
+                        rs.getInt("product_category_id"), rs.getString("brand_name"), rs.getDouble("price"),
+                        rs.getInt("age_category"));
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -61,8 +66,7 @@ public class ProductDAOClient implements ProductDAOInterface {
 
     @Override
     public ArrayList<Product> getProductsByCategory(int categoryId) throws SQLException {
-        ConnectionFactory conn = new ConnectionFactory();
-        Connection connection = conn.getConnection();
+        Connection connection = getConnection();
         ArrayList<Product> productsList = new ArrayList<>();
         ResultSet rs = null;
 
@@ -72,8 +76,8 @@ public class ProductDAOClient implements ProductDAOInterface {
 
             while (rs.next()) {
                 Product product = new Product(rs.getInt("product_id"), rs.getString("name"),
-                        rs.getInt("product_category_id"), rs.getString("brand_name"), rs.getDouble("price"),
-                        rs.getInt("min_age"));
+                        rs.getInt("product_category_id"), rs.getString("brand_name"), rs.getFloat("price"),
+                        rs.getInt("age_category"));
                 productsList.add(product);
             }
         } catch (SQLException e) {
