@@ -36,7 +36,7 @@ public class InputManager {
         int statNumber = getIntInput("What do you choose? Type the number.");
 
         while (statNumber < 1 || statNumber > menuOptions.length) {
-            statNumber = getIntInput(String.format("Wrong input! type the number between 1 and %d",
+            statNumber = getIntInput(String.format("Wrong input! type the number between 1 and %d:",
                     menuOptions.length));
         }
         return statNumber;
