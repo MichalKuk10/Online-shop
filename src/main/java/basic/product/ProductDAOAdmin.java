@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 public class ProductDAOAdmin implements ProductDAOInterface {
 
-
     private Connection getConnection() {
         ConnectionFactory factory = new ConnectionFactory();
         return factory.getConnection();
@@ -114,4 +113,30 @@ public class ProductDAOAdmin implements ProductDAOInterface {
         }finally{
             connection.close();
         }
-        }}
+        }
+
+    public void modifyProduct(int productId, int categoryId, String name, String brand,  double price, int ageCategory){
+        Connection connection = getConnection();
+
+        try {
+            PreparedStatement statement = connection.prepareStatement("UPDATE products SET product_category_id = ?," +
+                    " name  = ?, brand_name = ?, price = ?, age_category = ? WHERE product_id = ?;");
+            statement.setInt(1, categoryId);
+            statement.setString(2, name);
+            statement.setString(3, brand);
+            statement.setDouble(4, price);
+            statement.setInt(5, ageCategory);
+            statement.setInt(6, productId);
+
+            int i = statement.executeUpdate();
+            if (i == 1) {
+                System.out.println("Product has been updated");
+                //return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        //return false;
+    }
+    }
+

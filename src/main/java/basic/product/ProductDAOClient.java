@@ -2,10 +2,7 @@ package basic.product;
 
 import connection.ConnectionFactory;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class ProductDAOClient implements ProductDAOInterface {
@@ -43,13 +40,12 @@ public class ProductDAOClient implements ProductDAOInterface {
     @Override
     public Product getProductById(int id) throws SQLException {
         Connection connection = getConnection();
-        Statement statement =  null;
-        ResultSet rs = null;
         Product product = null;
 
         try {
-            statement = connection.createStatement();
-            rs = statement.executeQuery("SELECT * FROM products WHERE product_id = " + id + ";");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM products WHERE product_id = ?");
+            statement.setInt(1, id);
+            ResultSet rs = statement.executeQuery();
             while(rs.next()) {
                 product = new Product(rs.getInt("product_id"), rs.getString("name"),
                         rs.getInt("product_category_id"), rs.getString("brand_name"), rs.getDouble("price"),
@@ -68,11 +64,11 @@ public class ProductDAOClient implements ProductDAOInterface {
     public ArrayList<Product> getProductsByCategory(int categoryId) throws SQLException {
         Connection connection = getConnection();
         ArrayList<Product> productsList = new ArrayList<>();
-        ResultSet rs = null;
 
         try {
-            Statement stmt = connection.createStatement();
-            rs = stmt.executeQuery("SELECT * FROM products WHERE product_category_id = " + categoryId + ";");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM products WHERE product_category_id =?");
+            statement.setInt(1, categoryId);
+            ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
                 Product product = new Product(rs.getInt("product_id"), rs.getString("name"),
