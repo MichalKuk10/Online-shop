@@ -59,14 +59,21 @@ public class AccessController {
     }
 
     private void coordinateRegistrationProcess() {
-        // 1. Ask for email (input manager)
-        // 2. Check if email already in database
-        //    - if yes, wyświetl komunikat i daj opcję poprowadzenia do logowania (metoda handleIfEmailAlreadyInDatabase)
-        //    - in not, punkt 3
-        // 3. Ask for password (input manager)
-        // 4. Ask for password again and see if it matches (optional)
-        // 5. Insert user to database (using dao)
-        // 6. Print message (registration completed) and run coordinateLoginProcess();
+        String email = input.askForEmail();
+
+        if (userDAO.checkIfEmailInDatabase(email)) {
+            view.print("This email is already in our database. You will be redirected to login page");
+            coordinateLoginProcess();
+        }
+
+        String password = input.askForPassword();
+        String repeatedPassword = input.askForPassword();
+        comparePasswords(password, repeatedPassword);
+
+        User newUser = new User(email, password);
+        userDAO.insertUser(newUser);
+        view.print("Your registration process is completed. Please log in to the app");
+        coordinateLoginProcess();
     }
 
     private void showMenuIfEmailNotInDatabase() {
@@ -117,6 +124,13 @@ public class AccessController {
                 break;
             case 2:
                 System.exit(0);
+        }
+    }
+
+    private void comparePasswords(String password1, String password2) {
+        if (!password1.equals(password2)) {
+            view.print("Your passwords don't match. Your registration process will be restarted!");
+            coordinateRegistrationProcess();
         }
     }
 
