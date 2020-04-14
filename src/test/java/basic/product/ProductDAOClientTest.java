@@ -15,7 +15,7 @@ class ProductDAOClientTest {
         Product product = new Product(20, "Party hat", 10, "LG-Imports", 2,5);
 
         //when
-        Product result  = prod.getProductById(2);
+        Product result  = prod.getProductById(20);
 
         //then
 
