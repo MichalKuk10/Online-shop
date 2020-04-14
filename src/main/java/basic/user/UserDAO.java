@@ -96,7 +96,7 @@ public class UserDAO implements UserDAOInterface {
     }
 
     @Override
-    public User getUserByEmail(String email) {
+    public User getUserByEmailAndPassword(String email, String password) {
         Connection connection = getConnection();
 
         try {
@@ -104,7 +104,7 @@ public class UserDAO implements UserDAOInterface {
             statement.setString(1, email);
             ResultSet resultSet = statement.executeQuery();
 
-            if (resultSet.next()) {
+            if (resultSet.next() && resultSet.getString("password").equals(password)) {
                 return extractUserFromResultSet(resultSet);
             }
         } catch (SQLException e) {

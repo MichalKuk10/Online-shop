@@ -1,6 +1,11 @@
 package controllers;
 
+import basic.user.User;
+import basic.user.UserDAO;
 import input_manager.InputManager;
+import main_controllers.MainControllerAdmin;
+import main_controllers.MainControllerClient;
+import main_controllers.MainControllerUser;
 import view.AbstractView;
 import view.AccessControllerView;
 
@@ -9,13 +14,15 @@ public class AccessController {
     private final String[] menuOptions = {"Log in", "Create new account", "Quit"};
     private InputManager input;
     private AbstractView view;
+    private UserDAO userDAO;
 
     public AccessController() {
         input = new InputManager();
         view = new AccessControllerView();
+        userDAO = new UserDAO();
     }
 
-    public void purchaseControllerMenu() {
+    public void accessControllerMenu() {
         int choice = input.askForMenuOption(menuOptions, "Welcome to our exclusive toy store! What do you want to do?");
         reactToUserInput(choice);
         while (choice != menuOptions.length) {
@@ -36,15 +43,19 @@ public class AccessController {
     }
 
     private void coordinateLoginProcess() {
-        // 1. Ask for email (dorobić metodę w input managerze)
-        // 2. Ask for password (dorobić metodę w input managerze)
-        // 3. Check if email in database.
-        //    - Jeśli nie to dorobić metodę handleIfEmailNotInDatabase(), która prowadzi do rejestracji lub wyłącza program
-        //    - Jeśli tak to punkt 4
-        // 4. Check if password matches email
-        //    - Jeśli nie to spytać 5 razy (może zamknąć w metodę handleWrongPassword(). Po 5 razach wyświetlić komunikat "yu're blocked, contact our customer service"
-        // 5. Create user based on email
-        // 6. Run main controller (zamknąć w metodę chooseRightControllerForUser())
+        String email = input.askForEmail();
+        String password = input.askForPassword();
+
+        if (!userDAO.checkIfEmailInDatabase(email)) {
+            showMenuIfEmailNotInDatabase();
+        }
+
+        while (!userDAO.checkIfPasswordMatchesEmail(email, password)) {
+            password = handleWrongPassword(email, password);
+        }
+
+        User user = userDAO.getUserByEmailAndPassword(email, password);
+        runRightControllerForUser(user);
     }
 
     private void coordinateRegistrationProcess() {
@@ -56,5 +67,67 @@ public class AccessController {
         // 4. Ask for password again and see if it matches (optional)
         // 5. Insert user to database (using dao)
         // 6. Print message (registration completed) and run coordinateLoginProcess();
+    }
+
+    private void showMenuIfEmailNotInDatabase() {
+        String[] options = {"Go to registration", "Quit"}
+        int choice = input.askForMenuOption(options, "What would you like to do?");
+        while (choice != options.length) {
+            choice = input.askForMenuOption(menuOptions, "What would you like to do?");
+        }
+        handleIfEmailNotInDatabase(choice);
+    }
+
+    private void handleIfEmailNotInDatabase(int choice) {
+        switch(choice) {
+            case 1:
+                coordinateRegistrationProcess();
+                break;
+            case 2:
+                System.exit(0);
+        }
+    }
+
+    private String handleWrongPassword(String email, String password) {
+        int count = 0;
+        while (!userDAO.checkIfPasswordMatchesEmail(email, password) && count <= 5) {
+            password = input.askForPassword();
+            count ++;
+        }
+        if (count > 6) {
+            showMenuIfWrongPasswordAfterPermittedAttempts();
+        }
+        // consider other precautions?
+        return password;
+    }
+
+    private void showMenuIfWrongPasswordAfterPermittedAttempts() {
+        String[] options = {"Restart login process", "Quit"}
+        int choice = input.askForMenuOption(options, "What would you like to do?");
+        while (choice != options.length) {
+            choice = input.askForMenuOption(menuOptions, "What would you like to do?");
+        }
+        handleIfWrongPasswordAfterPermittedAttempts(choice);
+    }
+
+    private void handleIfWrongPasswordAfterPermittedAttempts(int choice) {
+        switch(choice) {
+            case 1:
+                accessControllerMenu();
+                break;
+            case 2:
+                System.exit(0);
+        }
+    }
+
+    private void runRightControllerForUser(User user) {
+        MainControllerUser mainController;
+
+        if (user.getRole().equals("admin")) {
+            mainController = new MainControllerAdmin();
+        } else {
+            mainController = new MainControllerClient();
+        }
+//        mainController.mainMenu(); - uncomment when MainController is ready
     }
 }
