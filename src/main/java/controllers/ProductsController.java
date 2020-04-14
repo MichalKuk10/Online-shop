@@ -11,11 +11,12 @@ import static basic.product.ProductsControllerView.printProduct;
 public class ProductsController{
     private InputManager inputManager = new InputManager();
     private ProductDAOClient productDAOClient = new ProductDAOClient();
-    private BasketController basketController = new BasketController();
+    private Basket basket = new Basket();
+    private BasketController basketController = new BasketController(basket);
     private String[] menuOptions = {"Show All Products", "Select Products by category",
             "Choose product by ID", "Back to Main Menu", "Go to my basket"};
     private ProductsControllerView view = new ProductsControllerView();
-    private Basket basket = new Basket();
+
 
     public void run() throws SQLException {
         boolean running = true;
@@ -42,7 +43,7 @@ public class ProductsController{
             view.printMenu(menuOptions, "Menu Options: ");//its a place for main menu
         }
         else if(choice == 5){
-           // basketController.run();
+           basketController.run();
         }
     }
     public void backtoMenu() throws SQLException {
@@ -55,7 +56,7 @@ public class ProductsController{
             int quantity = inputManager.getIntInput("How many?");
             Product product = productDAOClient.getProductById(prodID);
             System.out.println(product);
-           // basket.addProduct(product, quantity)
+           basket.addProduct(product, quantity);
         }
         else if(userDecistion == 2){
             backtoMenu();
