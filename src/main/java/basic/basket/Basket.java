@@ -1,8 +1,10 @@
 package basic.basket;
 
 import basic.product.Product;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Iterator;
 
-import java.util.*;
 
 public class Basket {
 
@@ -13,28 +15,47 @@ public class Basket {
 
     }
 
-    public void addProduct(Product product, Integer quantity){
-        products.put(product,quantity);
+    public void addProduct(Product product, Integer quantity) {
+        Iterator<Map.Entry<Product, Integer>> iterator = products.entrySet().iterator();
+        int i = 1;
+        boolean alreadyInBasket = false;
+        while (iterator.hasNext()) {
+            Map.Entry<Product, Integer> entry = iterator.next();
+            System.out.println("iterating through basket products");
+            System.out.println("product to add = " + product.getName() + "productinloop = :" + entry.getKey().getName());
+            if (product.getName() == entry.getKey().getName()) {
+                System.out.println("true");
+                quantity += entry.getValue();
+                products.replace(product, quantity);
+                alreadyInBasket = true;
+            }
+        }
+        System.out.println("alreadyinbasket: " + alreadyInBasket);
+        if (alreadyInBasket == false) {
+            products.put(product, quantity);
+        }
     }
 
-    public void deleteProduct(String productName){
+    public void deleteProduct(int productIDtoDelete){
         Product productToDelete = null;
-
-        for (Product product_ : products.keySet()){
-            if (product_.getProductName() == productName){
-                productToDelete = product_;
+        int i = 1;
+        for (Product product : products.keySet()){
+            if (i == productIDtoDelete){
+                productToDelete = product;
             }
+            i++;
         }
         products.remove(productToDelete);
     }
 
-    public void changeProductQuantity(String productName, Integer quantity) {
+    public void changeProductQuantity(Integer productId, Integer quantity) {
         Product productToBeChanged = null;
-
+        int i = 1;
         for (Product product : products.keySet()) {
-            if (product.getProductName() == productName) {
+            if (i == productId) {
                 productToBeChanged = product;
             }
+            i++;
         }
         products.replace(productToBeChanged, quantity);
     }
@@ -49,7 +70,7 @@ public class Basket {
         while(iterator.hasNext())
         {
             Map.Entry<Product, Integer> entry = iterator.next();
-            value += entry.getKey().getprice() * entry.getValue();
+            value += entry.getKey().getPrice() * entry.getValue();
         }
     }
 
@@ -57,5 +78,27 @@ public class Basket {
         return products;
     }
 
+    public float getValue(){
+        return value;
+    }
 
+
+    public String toString(){
+        return "Basket{" +
+                "Products: " + productsToString() +
+                "Value = " + value +
+                '}';
+    }
+
+    private String productsToString(){
+        String productsToString = "";
+        Iterator<Map.Entry<Product, Integer>> iterator = products.entrySet().iterator();
+        int i = 1;
+        while(iterator.hasNext())
+        {
+            Map.Entry<Product, Integer> entry = iterator.next();
+            productsToString += "\n"+ i + ". " + entry.getKey().getName() + " | quantity: " + entry.getValue();
+        }
+        return productsToString;
+    }
 }
