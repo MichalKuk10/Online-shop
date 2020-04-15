@@ -1,3 +1,5 @@
+import basic.user.UserDAO;
+import basic.user.UserJDBCDAO;
 import controllers.AccessController;
 import main_controllers.MainControllerClient;
 
@@ -8,7 +10,8 @@ public class Main {
         DatabaseContentLoader dbcl = new DatabaseContentLoader();
         dbcl.fillDatabase();
 
-        AccessController accessController = new AccessController();
+        UserDAO userDAO = new UserJDBCDAO();
+        AccessController accessController = new AccessController(userDAO);
         accessController.accessControllerMenu();
     }
 }

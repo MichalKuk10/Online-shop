@@ -1,4 +1,4 @@
 package view;
 
-public class OfferControllerView extends AbstractView {
+public class OfferControllerView extends View {
 }

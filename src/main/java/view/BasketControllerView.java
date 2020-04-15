@@ -3,13 +3,12 @@ package view;
 import basic.basket.Basket;
 import basic.product.Product;
 
-import java.sql.SQLOutput;
 import java.util.Iterator;
 import java.util.Map;
 
 import static java.lang.Math.round;
 
-public class BasketControllerView extends AbstractView {
+public class BasketControllerView extends View {
 
     public BasketControllerView(){
 

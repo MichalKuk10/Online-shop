@@ -1,4 +1,4 @@
 package basic.order;
 
-public class OrderDAO implements OrderDAOInterface {
+public interface OrderDAO {
 }

@@ -2,7 +2,7 @@ package controllers;
 
 import basic.basket.Basket;
 import basic.product.Product;
-import basic.product.ProductDAOClient;
+import basic.product.ProductJDBCDAOClient;
 import basic.product.ProductsControllerView;
 import input_manager.InputManager;
 import java.sql.SQLException;
@@ -10,7 +10,7 @@ import static basic.product.ProductsControllerView.printProduct;
 
 public class ProductsController{
     private InputManager inputManager = new InputManager();
-    private ProductDAOClient productDAOClient = new ProductDAOClient();
+    private ProductJDBCDAOClient productJDBCDAOClient = new ProductJDBCDAOClient();
     private Basket basket = new Basket();
     private BasketController basketController = new BasketController(basket);
     private String[] menuOptions = {"Show All Products", "Select Products by category",
@@ -27,16 +27,16 @@ public class ProductsController{
     }
     public void reactToUserChoice(int choice) throws SQLException {
         if(choice == 1){
-            printProduct(productDAOClient.getAllProducts());
+            printProduct(productJDBCDAOClient.getAllProducts());
             addToBasket();
         }
         else if(choice == 2){
             int userInput = inputManager.getIntInput("Please provide me with product ID: ");
-            printProduct(productDAOClient.getProductsByCategory(userInput));
+            printProduct(productJDBCDAOClient.getProductsByCategory(userInput));
         }
         else if(choice == 3){
             int userInput = inputManager.getIntInput("Please provide me with products category ID: ");
-            printProduct(productDAOClient.getProductById(userInput));
+            printProduct(productJDBCDAOClient.getProductById(userInput));
         }
         else if(choice == 4){
             view.clearScreen();
@@ -54,7 +54,7 @@ public class ProductsController{
         if(userDecistion == 1){
             int prodID = inputManager.getIntInput("Please provide product ID");
             int quantity = inputManager.getIntInput("How many?");
-            Product product = productDAOClient.getProductById(prodID);
+            Product product = productJDBCDAOClient.getProductById(prodID);
             System.out.println(product);
            basket.addProduct(product, quantity);
         }

@@ -1,10 +1,10 @@
 package basic.product;
 
-import view.AbstractView;
+import view.View;
 
 import java.util.ArrayList;
 
-public class ProductsControllerView extends AbstractView {
+public class ProductsControllerView extends View {
 
     public static void printProduct(Product product) {
 

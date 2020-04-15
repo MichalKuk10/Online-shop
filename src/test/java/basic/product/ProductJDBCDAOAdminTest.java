@@ -6,11 +6,11 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ProductDAOAdminTest {
+class ProductJDBCDAOAdminTest {
     @Test
     public void shouldCheckIfProductAddedToDatabase() throws SQLException {
         //given
-        ProductDAOAdmin prod = new ProductDAOAdmin();
+        ProductJDBCDAOAdmin prod = new ProductJDBCDAOAdmin();
 
         //when
         boolean result  = prod.insertNewProduct(2, "GreenToy", "Toyland", 8, 2);
