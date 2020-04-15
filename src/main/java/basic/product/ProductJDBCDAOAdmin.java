@@ -83,23 +83,28 @@ public class ProductJDBCDAOAdmin implements ProductDAO {
         return  productsList;
     }
 
-    public boolean insertNewProduct(int productCategoryId, String name, String brand_name, float price, int age_category) throws SQLException {
+    public boolean insertNewProduct(Product product) throws SQLException {
         Connection connection = getConnection();
 
         try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO products (product_category_id, name, brand_name, price, age_category)" +
-                    "VALUES (" + productCategoryId + ",'" + name + "', '"  + brand_name + "'," + price  + "," + age_category + ");");
-                    statement.executeUpdate();
-                    System.out.println("This product has been added successfully to database! ");
-                    return true;
-
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO products (product_category_id, " +
+                    "name, brand_name, price, age_category) VALUES (?, ?, ?, ?, ?);");
+            statement.setInt(1, product.getCategoryId());
+            statement.setString(2, product.getName());
+            statement.setString(3, product.getBrand());
+            statement.setDouble(4, product.getPrice());
+            statement.setInt(5, product.getMinAge());
+            statement.executeUpdate();
+            System.out.println("This product has been added successfully to database! ");
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
-
+            System.out.println("Failed");
         } finally {
             connection.close();
-        } }
+        }
+        return false;
+    }
 
     public void deleteProductById(int id) throws SQLException {
         Connection connection = getConnection();
@@ -107,7 +112,7 @@ public class ProductJDBCDAOAdmin implements ProductDAO {
         try {
             Statement stmt = connection.createStatement();
             stmt.executeUpdate("DELETE FROM products WHERE product_id = " + id + ";");
-            System.out.println("Record deleted successfully");
+            System.out.println("Product deleted successfully");
             } catch (SQLException e) {
             e.printStackTrace();
         }finally{
@@ -115,28 +120,27 @@ public class ProductJDBCDAOAdmin implements ProductDAO {
         }
         }
 
-    public void modifyProduct(int productId, int categoryId, String name, String brand,  double price, int ageCategory){
+    public void modifyProduct(Product product, int id) throws SQLException {
         Connection connection = getConnection();
 
         try {
             PreparedStatement statement = connection.prepareStatement("UPDATE products SET product_category_id = ?," +
                     " name  = ?, brand_name = ?, price = ?, age_category = ? WHERE product_id = ?;");
-            statement.setInt(1, categoryId);
-            statement.setString(2, name);
-            statement.setString(3, brand);
-            statement.setDouble(4, price);
-            statement.setInt(5, ageCategory);
-            statement.setInt(6, productId);
+            statement.setInt(1, product.getCategoryId());
+            statement.setString(2, product.getName());
+            statement.setString(3, product.getBrand());
+            statement.setDouble(4, product.getPrice());
+            statement.setInt(5, product.getMinAge());
+            statement.setInt(6, id);
+            statement.executeUpdate();
+            System.out.println(" Information about this product updated ");
 
-            int i = statement.executeUpdate();
-            if (i == 1) {
-                System.out.println("Product has been updated");
-                //return true;
-            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        //return false;
+        finally {
+            connection.close();
+        }
     }
     }
 

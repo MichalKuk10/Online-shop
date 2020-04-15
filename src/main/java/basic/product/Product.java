@@ -9,6 +9,13 @@ public class Product {
     private double price;
     private int minAge;
 
+    public Product(String name, int categoryId, String brand, double price, int minAge) {
+        this.name = name;
+        this.categoryId = categoryId;
+        this.brand = brand;
+        this.price = price;
+        this.minAge = minAge;
+    }
     public Product(int productId, String name, int categoryId, String brand, double price, int minAge) {
         this.productId = productId;
         this.name = name;
