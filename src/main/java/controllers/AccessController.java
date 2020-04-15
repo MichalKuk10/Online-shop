@@ -77,7 +77,7 @@ public class AccessController {
     }
 
     private void showMenuIfEmailNotInDatabase() {
-        String[] options = {"Go to registration", "Quit"}
+        String[] options = {"Go to registration", "Quit"};
         int choice = input.askForMenuOption(options, "What would you like to do?");
         while (choice != options.length) {
             choice = input.askForMenuOption(menuOptions, "What would you like to do?");
@@ -109,7 +109,7 @@ public class AccessController {
     }
 
     private void showMenuIfWrongPasswordAfterPermittedAttempts() {
-        String[] options = {"Restart login process", "Quit"}
+        String[] options = {"Restart login process", "Quit"};
         int choice = input.askForMenuOption(options, "What would you like to do?");
         while (choice != options.length) {
             choice = input.askForMenuOption(menuOptions, "What would you like to do?");
