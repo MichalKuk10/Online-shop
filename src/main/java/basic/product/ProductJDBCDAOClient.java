@@ -5,7 +5,7 @@ import connection.ConnectionFactory;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class ProductDAOClient implements ProductDAOInterface {
+public class ProductJDBCDAOClient implements ProductDAO {
     private Connection getConnection() {
         ConnectionFactory factory = new ConnectionFactory();
         return factory.getConnection();

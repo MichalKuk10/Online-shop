@@ -3,7 +3,7 @@ package basic.product;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public interface ProductDAOInterface {
+public interface ProductDAO {
 
     public ArrayList<Product> getAllProducts() throws SQLException;
     public Product getProductById(int id) throws SQLException;

@@ -2,24 +2,24 @@ package controllers;
 
 import basic.user.User;
 import basic.user.UserDAO;
+import basic.user.UserJDBCDAO;
 import input_manager.InputManager;
 import main_controllers.MainControllerAdmin;
 import main_controllers.MainControllerClient;
 import main_controllers.MainControllerUser;
-import view.AbstractView;
-import view.AccessControllerView;
+import view.View;
 
 public class AccessController {
 
     private final String[] menuOptions = {"Log in", "Create new account", "Quit"};
-    private InputManager input;
-    private AbstractView view;
-    private UserDAO userDAO;
+    private final InputManager input;
+    private final View view;
+    private final UserDAO userDAO;
 
-    public AccessController() {
-        input = new InputManager();
-        view = new AccessControllerView();
-        userDAO = new UserDAO();
+    public AccessController(UserDAO userDAO) {
+        this.userDAO = userDAO;
+        this.input = new InputManager();
+        this.view = new View();
     }
 
     public void accessControllerMenu() {

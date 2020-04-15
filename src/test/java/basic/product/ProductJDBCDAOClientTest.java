@@ -6,12 +6,12 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ProductDAOClientTest {
+class ProductJDBCDAOClientTest {
 
     @Test
     public void shouldCheckIfReturnProductById() throws SQLException {
         //given
-        ProductDAOClient prod = new ProductDAOClient();
+        ProductJDBCDAOClient prod = new ProductJDBCDAOClient();
         Product product = new Product(20, "Party hat", 10, "LG-Imports", 2,5);
 
         //when

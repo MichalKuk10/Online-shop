@@ -1,6 +1,6 @@
 package input_manager;
 
-import view.AbstractView;
+import view.View;
 import view.MainControllerView;
 
 import java.util.Scanner;
@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class InputManager {
-    private AbstractView view;
+    private View view;
 
     public InputManager() {
         view = new MainControllerView();
