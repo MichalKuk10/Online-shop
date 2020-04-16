@@ -47,7 +47,7 @@ CREATE TABLE order_products (
 	CONSTRAINT edward FOREIGN KEY (product_id) REFERENCES products(product_id)
 );
 
-insert into users (email, password, first_name, last_name, phone_number, address, user_role, newsletter_subscription) values ('Jenson.Patel@gmail.com', '$&FuZm73', 'Jenson', 'Patel', '27345961', 'Bramblewick, Colsterworth Road, Skillington NG33 5HF', 'admin', true);
+insert into users (email, password, first_name, last_name, phone_number, address, user_role, newsletter_subscription) values ('admin@admin.pl', 'admin1', 'Jenson', 'Patel', '27345961', 'Bramblewick, Colsterworth Road, Skillington NG33 5HF', 'admin', true);
 insert into users (email, password, first_name, last_name, phone_number, address, user_role, newsletter_subscription) values ('Felix.Wilkinson@gmail.com', 'Ol9h?3!K', 'Felix', 'Wilkinson', '31469275', '17 Fincham Close, Stockton-On-Tees TS20 1RJ', 'admin', true);
 insert into users (email, password, first_name, last_name, phone_number, address, user_role, newsletter_subscription) values ('Reuben.Brooks@gmail.com', '3e4@LS?r', 'Reuben', 'Brooks', '58943762', '48 Birks Holt Drive, Maltby S66 7JZ', 'admin', true);
 insert into users (email, password, first_name, last_name, phone_number, address, user_role, newsletter_subscription) values ('Maximilian.Reid@gmail.com', '<?M14Sfc', 'Maximilian', 'Reid', '91865423', '3 Lilleshall Way, Stafford ST17 9FD', 'customer', false);

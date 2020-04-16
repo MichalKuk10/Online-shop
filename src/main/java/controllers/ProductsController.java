@@ -1,6 +1,5 @@
 package controllers;
 
-import basic.basket.Basket;
 import basic.product.Product;
 import basic.product.ProductJDBCDAOClient;
 import basic.product.ProductsControllerView;
@@ -9,18 +8,21 @@ import java.sql.SQLException;
 import static basic.product.ProductsControllerView.printProduct;
 
 public class ProductsController{
-    private InputManager inputManager = new InputManager();
-    private ProductJDBCDAOClient productJDBCDAOClient = new ProductJDBCDAOClient();
-    private Basket basket = new Basket();
-    private BasketController basketController = new BasketController(basket);
     private final String[] menuOptions = {"Show All Products", "Select Products by category",
             "Choose product by ID", "Back to Main Menu", "Go to my basket"};
+    private InputManager inputManager = new InputManager();
+    private ProductJDBCDAOClient productJDBCDAOClient = new ProductJDBCDAOClient();
+    private BasketController basketController;
     private ProductsControllerView view = new ProductsControllerView();
+    private boolean isRunning = true;
 
+    public ProductsController(BasketController basketController) {
+        this.basketController = basketController;
+    }
 
     public void run() throws SQLException {
-        boolean running = true;
-        while (running) {
+        isRunning = true;
+        while (isRunning) {
             int userChoice = inputManager.askForMenuOption(menuOptions, "Products Menu");
             reactToUserChoice(userChoice);
         }
@@ -39,27 +41,21 @@ public class ProductsController{
             printProduct(productJDBCDAOClient.getProductById(userInput));
         }
         else if(choice == 4){
-            view.clearScreen();
-            view.printMenu(menuOptions, "Menu Options: ");//its a place for main menu
+            isRunning = false;
         }
         else if(choice == 5){
            basketController.run();
         }
     }
-    public void backtoMenu() throws SQLException {
-        run();
-    }
+
     public void addToBasket() throws SQLException {
-        int userDecistion = inputManager.getIntInput("Please type 1 to add a product to your basket or 2 to go back to Main Menu");
-        if(userDecistion == 1){
+        int userDecision = inputManager.getIntInput("Please type 1 to add a product to your basket or 2 to go back to Main Menu");
+        if(userDecision == 1){
             int prodID = inputManager.getIntInput("Please provide product ID");
             int quantity = inputManager.getIntInput("How many?");
             Product product = productJDBCDAOClient.getProductById(prodID);
             System.out.println(product);
-           basket.addProduct(product, quantity);
-        }
-        else if(userDecistion == 2){
-            backtoMenu();
+            basketController.addProduct(product, quantity);
         }
     }
 }

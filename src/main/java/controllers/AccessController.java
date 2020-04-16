@@ -2,11 +2,10 @@ package controllers;
 
 import basic.user.User;
 import basic.user.UserDAO;
-import basic.user.UserJDBCDAO;
 import input_manager.InputManager;
+import main_controllers.MainController;
 import main_controllers.MainControllerAdmin;
 import main_controllers.MainControllerClient;
-import main_controllers.MainControllerUser;
 import view.View;
 
 public class AccessController {
@@ -15,6 +14,7 @@ public class AccessController {
     private final InputManager input;
     private final View view;
     private final UserDAO userDAO;
+    private boolean isRunning = true;
 
     public AccessController(UserDAO userDAO) {
         this.userDAO = userDAO;
@@ -22,22 +22,24 @@ public class AccessController {
         this.view = new View();
     }
 
-    public void accessControllerMenu() {
-        int choice = input.askForMenuOption(menuOptions, "Welcome to our exclusive toy store! What do you want to do?");
-        reactToUserInput(choice);
-        while (choice != menuOptions.length) {
-            choice = input.askForMenuOption(menuOptions, "Welcome to our exclusive toy store! What do you want to do?");
-            reactToUserInput(choice);
+    public void run() {
+        isRunning = true;
+        while (isRunning) {
+            int choice = input.askForMenuOption(menuOptions, "Welcome to our exclusive toy store! What do you want to do?");
+            reactToUserChoice(choice);
         }
     }
 
-    private void reactToUserInput(int number) {
+    private void reactToUserChoice(int number) {
         switch(number) {
             case 1:
                 coordinateLoginProcess();
                 break;
             case 2:
                 coordinateRegistrationProcess();
+                break;
+            case 3:
+                isRunning = false;
                 break;
         }
     }
@@ -120,7 +122,7 @@ public class AccessController {
     private void handleIfWrongPasswordAfterPermittedAttempts(int choice) {
         switch(choice) {
             case 1:
-                accessControllerMenu();
+                run();
                 break;
             case 2:
                 System.exit(0);
@@ -135,13 +137,13 @@ public class AccessController {
     }
 
     private void runRightControllerForUser(User user) {
-        MainControllerUser mainController;
+        MainController mainController;
 
         if (user.getRole().equals("admin")) {
-            mainController = new MainControllerAdmin();
+            mainController = new MainControllerAdmin(user);
         } else {
-            mainController = new MainControllerClient();
+            mainController = new MainControllerClient(user);
         }
-//        mainController.mainMenu(); - uncomment when MainController is ready
+        mainController.run();
     }
 }
