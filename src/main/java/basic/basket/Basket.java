@@ -5,42 +5,37 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Iterator;
 
-
 public class Basket {
 
     private Map<Product, Integer> products = new HashMap<Product, Integer>();
     private float value;
 
     public Basket(){
-
     }
 
     public void addProduct(Product product, Integer quantity) {
-        Iterator<Map.Entry<Product, Integer>> iterator = products.entrySet().iterator();
-        int i = 1;
-        boolean alreadyInBasket = false;
-        while (iterator.hasNext()) {
-            Map.Entry<Product, Integer> entry = iterator.next();
-            System.out.println("iterating through basket products");
-            System.out.println("product to add = " + product.getName() + "productinloop = :" + entry.getKey().getName());
-            if (product.getName() == entry.getKey().getName()) {
-                System.out.println("true");
-                quantity += entry.getValue();
-                products.replace(product, quantity);
-                alreadyInBasket = true;
+        boolean productInBasket = false;
+        Product productToReplace = null;
+        int currentQuantity = 0;
+        for (Product p : products.keySet()) {
+            if (p.getProductId() == product.getProductId()) {
+                productToReplace = p;
+                productInBasket = true;
+                currentQuantity = products.get(p);
             }
         }
-        System.out.println("alreadyinbasket: " + alreadyInBasket);
-        if (alreadyInBasket == false) {
+        if (productInBasket) {
+            products.replace(productToReplace, currentQuantity + quantity);
+        } else {
             products.put(product, quantity);
         }
     }
 
-    public void deleteProduct(int productIDtoDelete){
+    public void deleteProduct(int productIndex){
         Product productToDelete = null;
         int i = 1;
         for (Product product : products.keySet()){
-            if (i == productIDtoDelete){
+            if (i == productIndex){
                 productToDelete = product;
             }
             i++;
@@ -48,11 +43,11 @@ public class Basket {
         products.remove(productToDelete);
     }
 
-    public void changeProductQuantity(Integer productId, Integer quantity) {
+    public void changeProductQuantity(Integer productIndex, Integer quantity) {
         Product productToBeChanged = null;
         int i = 1;
         for (Product product : products.keySet()) {
-            if (i == productId) {
+            if (i == productIndex) {
                 productToBeChanged = product;
             }
             i++;
@@ -65,6 +60,7 @@ public class Basket {
     }
 
     public void calculateBasket() {
+        value = 0;
         Iterator<Map.Entry<Product, Integer>> iterator = products.entrySet().iterator();
 
         while(iterator.hasNext())
@@ -81,7 +77,6 @@ public class Basket {
     public float getValue(){
         return value;
     }
-
 
     public String toString(){
         return "Basket{" +
