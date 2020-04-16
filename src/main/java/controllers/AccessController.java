@@ -14,6 +14,7 @@ public class AccessController {
     private final InputManager input;
     private final View view;
     private final UserDAO userDAO;
+    private boolean isRunning = true;
 
     public AccessController(UserDAO userDAO) {
         this.userDAO = userDAO;
@@ -22,10 +23,9 @@ public class AccessController {
     }
 
     public void run() {
-        int choice = input.askForMenuOption(menuOptions, "Welcome to our exclusive toy store! What do you want to do?");
-        reactToUserChoice(choice);
-        while (choice != menuOptions.length) {
-            choice = input.askForMenuOption(menuOptions, "Welcome to our exclusive toy store! What do you want to do?");
+        isRunning = true;
+        while (isRunning) {
+            int choice = input.askForMenuOption(menuOptions, "Welcome to our exclusive toy store! What do you want to do?");
             reactToUserChoice(choice);
         }
     }
@@ -37,6 +37,9 @@ public class AccessController {
                 break;
             case 2:
                 coordinateRegistrationProcess();
+                break;
+            case 3:
+                isRunning = false;
                 break;
         }
     }

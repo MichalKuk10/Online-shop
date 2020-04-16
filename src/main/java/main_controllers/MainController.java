@@ -1,6 +1,7 @@
 package main_controllers;
 
 import basic.user.User;
+import basic.user.UserJDBCDAO;
 import controllers.BasketController;
 import controllers.NewsletterController;
 import controllers.ProductsController;
@@ -23,7 +24,7 @@ public class MainController {
         this.purchaseController = new PurchaseController();
         this.basketController = new BasketController(purchaseController);
         this.productsController = new ProductsController(basketController);
-        this.newsletterController = new NewsletterController();
+        this.newsletterController = new NewsletterController(user, new UserJDBCDAO());
         this.input = new InputManager();
     }
 
