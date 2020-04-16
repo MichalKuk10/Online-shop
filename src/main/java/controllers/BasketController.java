@@ -54,6 +54,7 @@ public class BasketController {
     public void showBasket(){
         basketcontrollerview.showBasket(basket);
     }
+
     public void addProduct(Product product, Integer quantity) {
         basket.addProduct(product, quantity);
     }
