@@ -1,5 +1,6 @@
 package basic.product;
 
+
 import view.View;
 
 import java.util.ArrayList;

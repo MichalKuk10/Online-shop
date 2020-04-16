@@ -13,7 +13,7 @@ public class ProductsController{
     private ProductJDBCDAOClient productJDBCDAOClient = new ProductJDBCDAOClient();
     private Basket basket = new Basket();
     private BasketController basketController = new BasketController(basket);
-    private String[] menuOptions = {"Show All Products", "Select Products by category",
+    private final String[] menuOptions = {"Show All Products", "Select Products by category",
             "Choose product by ID", "Back to Main Menu", "Go to my basket"};
     private ProductsControllerView view = new ProductsControllerView();
 

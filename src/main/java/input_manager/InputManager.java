@@ -32,6 +32,18 @@ public class InputManager {
         return scannerFromUser.nextInt();
     }
 
+    public double getDoubleInput(String message) {
+        view.print(message);
+        Scanner scannerFromUser = new Scanner(System.in);
+
+        while(!scannerFromUser.hasNextDouble()){
+            view.print("Wrong input! Please insert the correct number");
+            scannerFromUser.next();
+        }
+        return scannerFromUser.nextDouble();
+    }
+
+
     public int askForMenuOption(String[] menuOptions, String menuTitle) {
 
         view.printMenu(menuOptions, menuTitle);
