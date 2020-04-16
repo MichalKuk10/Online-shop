@@ -8,7 +8,7 @@ import java.io.Reader;
 import java.sql.Connection;
 
 public class DatabaseContentLoader {
-    private String dbFilepath = "src/main/data/toy_store_sample_data.sql";
+    private String dbFilepath = "src/main/resources/toy_store_sample_data.sql";
 
     public void fillDatabase() {
         try {

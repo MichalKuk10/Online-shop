@@ -5,59 +5,50 @@ import basic.product.Product;
 import view.BasketControllerView;
 import input_manager.InputManager;
 
+import java.sql.SQLException;
+
 public class BasketController {
 
     private Basket basket;
-    private String[] menuOptions = {"Change product quantity", "Delete product from basket", "Clear basket", "Go to product site", "Proceed to payment", "Back to products"};
+    private String[] menuOptions = {"Change product quantity", "Delete product from basket", "Clear basket", "Proceed to payment", "Go back"};
     private BasketControllerView basketcontrollerview = new BasketControllerView();
-    InputManager inputManger = new InputManager();
+    private InputManager inputManger = new InputManager();
+    private PurchaseController purchaseController;
+    private boolean isRunning = true;
 
-    public BasketController(Basket basket){
-        this.basket = basket;
+    public BasketController(PurchaseController purchaseController){
+        this.basket = new Basket();
+        this.purchaseController = purchaseController;
     }
 
-    public int run(){
-
-        int selector = 0;
-        while (selector == 0) {
+    public void run() throws SQLException {
+        isRunning = true;
+        while(isRunning){
             calculateBasketValue();
             showBasket();
             int userChoice = inputManger.askForMenuOption(menuOptions, "Basket Menu");
-            selector = reactToUserChoice(userChoice);
+            reactToUserChoice(userChoice);
         }
-        if (selector == 1){
-            return 1;
-        }
-        else if (selector == 2){
-            return 2;
-        }
-        else return 3;
     }
 
-    public void presentMenuOptions(){
-        basketcontrollerview.printMenu(menuOptions, "Basket Menu");
-    }
-
-    public Integer reactToUserChoice(Integer userChoice){
-
+    public void reactToUserChoice(Integer userChoice) throws SQLException {
         switch (userChoice) {
             case 1:
                 changeProductQuantity();
-                return 0;
+                break;
             case 2:
                 deleteProduct();
-                return 0;
+                break;
             case 3:
                 clearBasket();
-                return 0;
+                break;
             case 4:
-                return 1;
+                purchaseController.run();
+                break;
             case 5:
-                return 2;
-            case 6:
-                return 3;
+                isRunning = false;
+                break;
         }
-        return 0;
     }
 
     public void showBasket(){

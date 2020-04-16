@@ -1,8 +1,10 @@
 package main_controllers;
 
-import controllers.PurchaseController;
-import input_manager.InputManager;
+import basic.user.User;
 
-public class MainControllerClient implements MainControllerUser {
+public class MainControllerClient extends MainController {
 
+    public MainControllerClient(User user) {
+        super(user);
+    }
 }

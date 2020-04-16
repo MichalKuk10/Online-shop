@@ -1,4 +1,9 @@
 package main_controllers;
 
-public class MainControllerAdmin implements MainControllerUser {
+import basic.user.User;
+
+public class MainControllerAdmin extends MainController {
+    public MainControllerAdmin(User user) {
+        super(user);
+    }
 }

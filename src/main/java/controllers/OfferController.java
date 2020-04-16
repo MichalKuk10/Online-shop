@@ -8,33 +8,30 @@ import java.sql.SQLException;
 import static basic.product.ProductsControllerView.printProduct;
 
 public class OfferController {
+    private final String[] menuOptions = {"Show all products", "Find product by ID", "Find product by category ID",
+            "Insert new product", "Delete product", "Modify product", "Go to Main Menu"};
     private InputManager inputManager = new InputManager();
     private ProductJDBCDAOAdmin productAdmin = new ProductJDBCDAOAdmin();
     private ProductsControllerView printProduct = new ProductsControllerView();
-
-
-    private final String[] menuOptions = {"Show all products", "Find product by ID", "Find product by category ID",
-    "Insert new product", "Delete product", "Modify product", "Go to Main Menu"};
+    private boolean isRunning = true;
 
     public OfferController(ProductJDBCDAOAdmin productJDBCDAOAdmin){
     }
 
     public void run() throws SQLException {
-        boolean running = true;
-        while(true){
+        isRunning = true;
+        while(isRunning){
             int userDecision = presentMenuOptions();
             reactToUserChoice(userDecision);
             }
         }
 
     public int presentMenuOptions(){
-
         int userDecision = inputManager.askForMenuOption(menuOptions, "Admin Menu");
         return userDecision;
     }
 
     public void reactToUserChoice(int userDecision) throws SQLException {
-
         if(userDecision == 1) {
             printProduct(productAdmin.getAllProducts());
         }
@@ -59,9 +56,9 @@ public class OfferController {
             Product product = askForProductDetails();
             productAdmin.modifyProduct(product, id);
         }
-//        else(userDecision == 7) {
-//            //MainControllerAdmin.run(); to be confirmed
-//        }
+        else if(userDecision == 7) {
+            isRunning = false;
+        }
     }
 
     public Product askForProductDetails(){

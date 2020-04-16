@@ -2,11 +2,10 @@ package controllers;
 
 import basic.user.User;
 import basic.user.UserDAO;
-import basic.user.UserJDBCDAO;
 import input_manager.InputManager;
+import main_controllers.MainController;
 import main_controllers.MainControllerAdmin;
 import main_controllers.MainControllerClient;
-import main_controllers.MainControllerUser;
 import view.View;
 
 public class AccessController {
@@ -22,16 +21,16 @@ public class AccessController {
         this.view = new View();
     }
 
-    public void accessControllerMenu() {
+    public void run() {
         int choice = input.askForMenuOption(menuOptions, "Welcome to our exclusive toy store! What do you want to do?");
-        reactToUserInput(choice);
+        reactToUserChoice(choice);
         while (choice != menuOptions.length) {
             choice = input.askForMenuOption(menuOptions, "Welcome to our exclusive toy store! What do you want to do?");
-            reactToUserInput(choice);
+            reactToUserChoice(choice);
         }
     }
 
-    private void reactToUserInput(int number) {
+    private void reactToUserChoice(int number) {
         switch(number) {
             case 1:
                 coordinateLoginProcess();
@@ -120,7 +119,7 @@ public class AccessController {
     private void handleIfWrongPasswordAfterPermittedAttempts(int choice) {
         switch(choice) {
             case 1:
-                accessControllerMenu();
+                run();
                 break;
             case 2:
                 System.exit(0);
@@ -135,13 +134,13 @@ public class AccessController {
     }
 
     private void runRightControllerForUser(User user) {
-        MainControllerUser mainController;
+        MainController mainController;
 
         if (user.getRole().equals("admin")) {
-            mainController = new MainControllerAdmin();
+            mainController = new MainControllerAdmin(user);
         } else {
-            mainController = new MainControllerClient();
+            mainController = new MainControllerClient(user);
         }
-//        mainController.mainMenu(); - uncomment when MainController is ready
+        mainController.run();
     }
 }
