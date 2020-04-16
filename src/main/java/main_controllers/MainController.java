@@ -10,14 +10,14 @@ import input_manager.InputManager;
 
 import java.sql.SQLException;
 
-public class MainController {
-    private final String[] menuOptions = {"Browse products", "See your basket", "Finalize purchase", "Manage newsletter preferences", "Log out"};
+public abstract class MainController {
     private final User user;
-    private final ProductsController productsController;
-    private final BasketController basketController;
-    private final PurchaseController purchaseController;
-    private final NewsletterController newsletterController;
+    protected final ProductsController productsController;
+    protected final BasketController basketController;
+    protected final PurchaseController purchaseController;
+    protected final NewsletterController newsletterController;
     private final InputManager input;
+    private String[] menuOptions;
 
     public MainController(User user) {
         this.user = user;
@@ -26,6 +26,7 @@ public class MainController {
         this.productsController = new ProductsController(basketController);
         this.newsletterController = new NewsletterController(user, new UserJDBCDAO());
         this.input = new InputManager();
+        setMenuOptions();
     }
 
     public void run() {
@@ -41,20 +42,13 @@ public class MainController {
         }
     }
 
-    private void reactToUserChoice(int choice) throws SQLException {
-        switch(choice) {
-            case 1:
-                productsController.run();
-                break;
-            case 2:
-                basketController.run();
-                break;
-            case 3:
-                purchaseController.run();
-                break;
-            case 4:
-                newsletterController.run();
-                break;
+    abstract void reactToUserChoice(int choice) throws SQLException;
+
+    private void setMenuOptions() {
+        if (user.getRole().equals("admin")) {
+            menuOptions = new String[]{"Browse products", "See your basket", "Finalize purchase", "Manage newsletter preferences", "Add/delete products", "Log out"};
+        } else {
+            menuOptions = new String[]{"Browse products", "See your basket", "Finalize purchase", "Manage newsletter preferences", "Log out"};
         }
     }
 }
