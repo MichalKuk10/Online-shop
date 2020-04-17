@@ -5,6 +5,8 @@ import basic.order.OrderDAO;
 import basic.order.OrderJDBCDAO;
 import basic.product.ProductDAO;
 import basic.product.ProductJDBCDAOClient;
+import basic.discount_code.DiscountCodeDAO;
+import basic.discount_code.DiscountCodeJDBCDAO;
 import basic.user.User;
 import basic.user.UserDAO;
 import controllers.*;
@@ -26,7 +28,8 @@ public abstract class MainController implements RunnableController {
         Basket basket = new Basket();
         OrderDAO orderDAO = new OrderJDBCDAO();
         ProductDAO productDAO = new ProductJDBCDAOClient();
-        this.purchaseController = new PurchaseController(user, basket, orderDAO);
+        DiscountCodeDAO discountCodeDAO = new DiscountCodeJDBCDAO();
+        this.purchaseController = new PurchaseController(user, userDAO, orderDAO, discountCodeDAO);
         this.basketController = new BasketController(basket, purchaseController);
         this.productsController = new ProductsController(basketController, productDAO);
         this.newsletterController = new NewsletterController(user, userDAO);
