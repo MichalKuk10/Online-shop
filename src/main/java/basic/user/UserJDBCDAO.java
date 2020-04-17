@@ -16,9 +16,7 @@ public class UserJDBCDAO implements UserDAO {
 
     @Override
     public boolean insertUser(User user) {
-        Connection connection = getConnection();
-
-        try {
+        try (Connection connection = getConnection()) {
             PreparedStatement statement = connection.prepareStatement("INSERT INTO users (email, password, user_role, newsletter_subscription) VALUES (?, ?, 'customer', false);");
             statement.setString(1, user.getEmail());
             statement.setString(2, user.getPassword());
@@ -36,8 +34,7 @@ public class UserJDBCDAO implements UserDAO {
 
     @Override
     public boolean updateUser(User user) {
-        Connection connection = getConnection();
-        try {
+        try (Connection connection = getConnection()) {
             PreparedStatement statement = connection.prepareStatement("UPDATE users SET email = ?, password = ?, first_name = ?, last_name = ?, phone_number = ?, address = ?, newsletter_subscription = ? WHERE user_id = ?;");
             statement.setString(1, user.getEmail());
             statement.setString(2, user.getPassword());
@@ -60,8 +57,7 @@ public class UserJDBCDAO implements UserDAO {
 
     @Override
     public boolean checkIfEmailInDatabase(String email) {
-        Connection connection = getConnection();
-        try {
+        try (Connection connection = getConnection()) {
             PreparedStatement statement = connection.prepareStatement("SELECT email FROM users WHERE email = ?;");
             statement.setString(1, email);
             ResultSet resultSet = statement.executeQuery();
@@ -77,8 +73,7 @@ public class UserJDBCDAO implements UserDAO {
 
     @Override
     public boolean checkIfPasswordMatchesEmail(String givenEmail, String givenPassword) {
-        Connection connection = getConnection();
-        try {
+        try (Connection connection = getConnection()) {
             PreparedStatement statement = connection.prepareStatement("SELECT password FROM users WHERE email = ?;");
             statement.setString(1, givenEmail);
             ResultSet resultSet = statement.executeQuery();
@@ -96,9 +91,7 @@ public class UserJDBCDAO implements UserDAO {
 
     @Override
     public User getUserByEmailAndPassword(String email, String password) {
-        Connection connection = getConnection();
-
-        try {
+        try (Connection connection = getConnection()) {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE email = ?;");
             statement.setString(1, email);
             ResultSet resultSet = statement.executeQuery();
@@ -108,8 +101,7 @@ public class UserJDBCDAO implements UserDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-
+        } 
         return null;
     }
 
