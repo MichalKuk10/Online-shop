@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class BasketController {
+public class BasketController implements RunnableController {
 
     private final Basket basket;
     private final List<String> menuOptions = new ArrayList<>(Arrays.asList("Change product quantity", "Delete product from basket", "Clear basket", "Proceed to payment", "Go back"));
@@ -24,6 +24,7 @@ public class BasketController {
         this.purchaseController = purchaseController;
     }
 
+    @Override
     public void run() throws SQLException {
         isRunning = true;
         while(isRunning){

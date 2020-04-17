@@ -11,7 +11,7 @@ import java.util.List;
 
 import static basic.product.ProductsControllerView.printProduct;
 
-public class ProductsController{
+public class ProductsController implements RunnableController {
     private final List<String> menuOptions = new ArrayList<>(Arrays.asList("Show All Products", "Select Products by category",
             "Choose product by ID", "Back to Main Menu", "Go to my basket"));
     private final InputManager inputManager = new InputManager();
@@ -25,6 +25,7 @@ public class ProductsController{
         this.productDAO = productDAO;
     }
 
+    @Override
     public void run() throws SQLException {
         isRunning = true;
         while (isRunning) {

@@ -7,16 +7,13 @@ import basic.product.ProductDAO;
 import basic.product.ProductJDBCDAOClient;
 import basic.user.User;
 import basic.user.UserDAO;
-import controllers.BasketController;
-import controllers.NewsletterController;
-import controllers.ProductsController;
-import controllers.PurchaseController;
+import controllers.*;
 import input_manager.InputManager;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public abstract class MainController {
+public abstract class MainController implements RunnableController {
     protected List<String> menuOptions;
     protected final ProductsController productsController;
     protected final BasketController basketController;
@@ -24,14 +21,11 @@ public abstract class MainController {
     protected final NewsletterController newsletterController;
     private final InputManager input;
 
-
     public MainController(User user, UserDAO userDAO) {
         initializeMenu();
-
         Basket basket = new Basket();
         OrderDAO orderDAO = new OrderJDBCDAO();
         ProductDAO productDAO = new ProductJDBCDAOClient();
-
         this.purchaseController = new PurchaseController(user, basket, orderDAO);
         this.basketController = new BasketController(basket, purchaseController);
         this.productsController = new ProductsController(basketController, productDAO);
@@ -39,6 +33,7 @@ public abstract class MainController {
         this.input = new InputManager();
     }
 
+    @Override
     public void run() {
         try {
             int choice = input.askForMenuOption(menuOptions, "Welcome to our exclusive toy store! What do you want to do?");

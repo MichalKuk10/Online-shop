@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class NewsletterController {
+public class NewsletterController implements RunnableController {
     private final List<String> menuOptions = new ArrayList<>(Arrays.asList("Change newsletter preferences", "Back to main menu"));
     private final User user;
     private final UserDAO userDAO;
@@ -24,6 +24,7 @@ public class NewsletterController {
         this.view = new View();
     }
 
+    @Override
     public void run() {
         isRunning = true;
         while (isRunning) {

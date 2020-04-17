@@ -11,7 +11,7 @@ import java.util.List;
 
 import static basic.product.ProductsControllerView.printProduct;
 
-public class OfferController {
+public class OfferController implements RunnableController {
     private final List<String> menuOptions = new ArrayList<>(Arrays.asList("Show all products", "Find product by ID", "Find product by category ID",
             "Insert new product", "Delete product", "Modify product", "Go to Main Menu"));
     private final InputManager inputManager = new InputManager();
@@ -23,6 +23,7 @@ public class OfferController {
         this.productDAOAdmin = productJDBCDAOAdmin;
     }
 
+    @Override
     public void run() throws SQLException {
         isRunning = true;
         while(isRunning){

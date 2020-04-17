@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class AccessController {
+public class AccessController implements RunnableController {
     private final List<String> menuOptions = new ArrayList<>(Arrays.asList("Log in", "Create new account", "Quit"));
     private final InputManager input;
     private final View view;
@@ -25,6 +25,7 @@ public class AccessController {
         this.view = new View();
     }
 
+    @Override
     public void run() {
         isRunning = true;
         while (isRunning) {

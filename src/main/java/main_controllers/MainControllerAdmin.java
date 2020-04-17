@@ -4,18 +4,18 @@ import basic.product.ProductJDBCDAOAdmin;
 import basic.user.User;
 import basic.user.UserDAO;
 import controllers.OfferController;
+import controllers.RunnableController;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class MainControllerAdmin extends MainController {
-    private OfferController offerController;
-    private ProductJDBCDAOAdmin productDAOAdmin;
+public class MainControllerAdmin extends MainController implements RunnableController {
+    private final OfferController offerController;
 
     public MainControllerAdmin(User user, UserDAO userDAO) {
         super(user, userDAO);
-        this.productDAOAdmin = new ProductJDBCDAOAdmin();
+        ProductJDBCDAOAdmin productDAOAdmin = new ProductJDBCDAOAdmin();
         this.offerController = new OfferController(productDAOAdmin);
     }
 

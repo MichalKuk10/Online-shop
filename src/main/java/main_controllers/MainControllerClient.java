@@ -3,12 +3,13 @@ package main_controllers;
 import basic.product.ProductJDBCDAOClient;
 import basic.user.User;
 import basic.user.UserDAO;
+import controllers.RunnableController;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class MainControllerClient extends MainController {
+public class MainControllerClient extends MainController implements RunnableController {
 
     public MainControllerClient(User user, UserDAO userDAO) {
         super(user, userDAO);

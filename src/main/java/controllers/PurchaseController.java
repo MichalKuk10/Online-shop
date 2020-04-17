@@ -5,7 +5,7 @@ import basic.order.OrderDAO;
 import basic.user.User;
 
 
-public class PurchaseController {
+public class PurchaseController implements RunnableController {
     private final User user;
     private final Basket basket;
     private final OrderDAO orderDAO;
@@ -16,6 +16,7 @@ public class PurchaseController {
         this.orderDAO = orderDAO;
     }
 
+    @Override
     public void run() {
 
     }
