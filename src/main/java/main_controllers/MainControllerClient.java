@@ -1,13 +1,15 @@
 package main_controllers;
 
+import basic.product.ProductJDBCDAOClient;
 import basic.user.User;
+import basic.user.UserDAO;
 
 import java.sql.SQLException;
 
 public class MainControllerClient extends MainController {
 
-    public MainControllerClient(User user) {
-        super(user);
+    public MainControllerClient(User user, UserDAO userDAO) {
+        super(user, userDAO);
     }
 
     @Override
@@ -26,5 +28,10 @@ public class MainControllerClient extends MainController {
                 newsletterController.run();
                 break;
         }
+    }
+
+    @Override
+    void initializeMenu() {
+        menuOptions = new String[]{"Browse products", "See your basket", "Finalize purchase", "Manage newsletter preferences", "Log out"};
     }
 }

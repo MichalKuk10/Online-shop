@@ -16,8 +16,8 @@ public class BasketController {
     private PurchaseController purchaseController;
     private boolean isRunning = true;
 
-    public BasketController(PurchaseController purchaseController){
-        this.basket = new Basket();
+    public BasketController(Basket basket, PurchaseController purchaseController){
+        this.basket = basket;
         this.purchaseController = purchaseController;
     }
 

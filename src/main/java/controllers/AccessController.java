@@ -106,7 +106,6 @@ public class AccessController {
         if (count > 6) {
             showMenuIfWrongPasswordAfterPermittedAttempts();
         }
-        // consider other precautions?
         return password;
     }
 
@@ -140,9 +139,9 @@ public class AccessController {
         MainController mainController;
 
         if (user.getRole().equals("admin")) {
-            mainController = new MainControllerAdmin(user);
+            mainController = new MainControllerAdmin(user, userDAO);
         } else {
-            mainController = new MainControllerClient(user);
+            mainController = new MainControllerClient(user, userDAO);
         }
         mainController.run();
     }

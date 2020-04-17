@@ -1,6 +1,12 @@
 package main_controllers;
 
+import basic.basket.Basket;
+import basic.order.OrderDAO;
+import basic.order.OrderJDBCDAO;
+import basic.product.ProductDAO;
+import basic.product.ProductJDBCDAOClient;
 import basic.user.User;
+import basic.user.UserDAO;
 import basic.user.UserJDBCDAO;
 import controllers.BasketController;
 import controllers.NewsletterController;
@@ -11,22 +17,26 @@ import input_manager.InputManager;
 import java.sql.SQLException;
 
 public abstract class MainController {
-    private final User user;
+    protected String[] menuOptions;
     protected final ProductsController productsController;
     protected final BasketController basketController;
     protected final PurchaseController purchaseController;
     protected final NewsletterController newsletterController;
     private final InputManager input;
-    private String[] menuOptions;
 
-    public MainController(User user) {
-        this.user = user;
-        this.purchaseController = new PurchaseController();
-        this.basketController = new BasketController(purchaseController);
-        this.productsController = new ProductsController(basketController);
-        this.newsletterController = new NewsletterController(user, new UserJDBCDAO());
+
+    public MainController(User user, UserDAO userDAO) {
+        initializeMenu();
+
+        Basket basket = new Basket();
+        OrderDAO orderDAO = new OrderJDBCDAO();
+        ProductDAO productDAO = new ProductJDBCDAOClient();
+
+        this.purchaseController = new PurchaseController(user, basket, orderDAO);
+        this.basketController = new BasketController(basket, purchaseController);
+        this.productsController = new ProductsController(basketController, productDAO);
+        this.newsletterController = new NewsletterController(user, userDAO);
         this.input = new InputManager();
-        setMenuOptions();
     }
 
     public void run() {
@@ -44,11 +54,5 @@ public abstract class MainController {
 
     abstract void reactToUserChoice(int choice) throws SQLException;
 
-    private void setMenuOptions() {
-        if (user.getRole().equals("admin")) {
-            menuOptions = new String[]{"Browse products", "See your basket", "Finalize purchase", "Manage newsletter preferences", "Add/delete products", "Log out"};
-        } else {
-            menuOptions = new String[]{"Browse products", "See your basket", "Finalize purchase", "Manage newsletter preferences", "Log out"};
-        }
-    }
+    abstract void initializeMenu();
 }
