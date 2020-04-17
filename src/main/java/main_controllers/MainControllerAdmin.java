@@ -2,16 +2,21 @@ package main_controllers;
 
 import basic.product.ProductJDBCDAOAdmin;
 import basic.user.User;
+import basic.user.UserDAO;
 import controllers.OfferController;
+import controllers.RunnableController;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
-public class MainControllerAdmin extends MainController {
-    private OfferController offerController;
+public class MainControllerAdmin extends MainController implements RunnableController {
+    private final OfferController offerController;
 
-    public MainControllerAdmin(User user) {
-        super(user);
-        offerController = new OfferController(new ProductJDBCDAOAdmin());
+    public MainControllerAdmin(User user, UserDAO userDAO) {
+        super(user, userDAO);
+        ProductJDBCDAOAdmin productDAOAdmin = new ProductJDBCDAOAdmin();
+        this.offerController = new OfferController(productDAOAdmin);
     }
 
     @Override
@@ -33,5 +38,11 @@ public class MainControllerAdmin extends MainController {
                 offerController.run();
                 break;
         }
+    }
+
+    @Override
+    void initializeMenu() {
+        menuOptions = new ArrayList<>(Arrays.asList("Browse products", "See your basket", "Finalize purchase",
+                "Manage newsletter preferences", "Add/delete products", "Log out"));
     }
 }

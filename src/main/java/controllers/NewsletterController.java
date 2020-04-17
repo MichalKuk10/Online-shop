@@ -5,8 +5,12 @@ import basic.user.UserDAO;
 import input_manager.InputManager;
 import view.View;
 
-public class NewsletterController {
-    private final String[] menuOptions = {"Change newsletter preferences", "Back to main menu"};
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class NewsletterController implements RunnableController {
+    private final List<String> menuOptions = new ArrayList<>(Arrays.asList("Change newsletter preferences", "Back to main menu"));
     private final User user;
     private final UserDAO userDAO;
     private final InputManager input;
@@ -20,6 +24,7 @@ public class NewsletterController {
         this.view = new View();
     }
 
+    @Override
     public void run() {
         isRunning = true;
         while (isRunning) {

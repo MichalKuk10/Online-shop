@@ -1,11 +1,13 @@
 package view;
 
+import java.util.List;
+
 public class View {
     public void print(String message) {
         System.out.println(message);
     }
 
-    public void printMenu(String[] menuItems, String title) {
+    public void printMenu(List<String> menuItems, String title) {
         int index = 1;
         System.out.println(String.format("\n%s:", title.toUpperCase()));
         for (String item : menuItems) {

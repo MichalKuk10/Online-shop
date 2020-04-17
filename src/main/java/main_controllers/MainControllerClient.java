@@ -1,13 +1,18 @@
 package main_controllers;
 
+import basic.product.ProductJDBCDAOClient;
 import basic.user.User;
+import basic.user.UserDAO;
+import controllers.RunnableController;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
-public class MainControllerClient extends MainController {
+public class MainControllerClient extends MainController implements RunnableController {
 
-    public MainControllerClient(User user) {
-        super(user);
+    public MainControllerClient(User user, UserDAO userDAO) {
+        super(user, userDAO);
     }
 
     @Override
@@ -26,5 +31,11 @@ public class MainControllerClient extends MainController {
                 newsletterController.run();
                 break;
         }
+    }
+
+    @Override
+    void initializeMenu() {
+        menuOptions = new ArrayList<>(Arrays.asList("Browse products", "See your basket", "Finalize purchase",
+                "Manage newsletter preferences", "Log out"));
     }
 }

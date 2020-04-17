@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 public interface ProductDAO {
 
-    public ArrayList<Product> getAllProducts() throws SQLException;
-    public Product getProductById(int id) throws SQLException;
-    public ArrayList<Product> getProductsByCategory(int categoryId) throws SQLException;
+    ArrayList<Product> getAllProducts() throws SQLException;
+    Product getProductById(int id) throws SQLException;
+    ArrayList<Product> getProductsByCategory(int categoryId) throws SQLException;
 
 }

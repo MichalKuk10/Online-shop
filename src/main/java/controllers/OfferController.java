@@ -5,19 +5,25 @@ import basic.product.ProductJDBCDAOAdmin;
 import basic.product.ProductsControllerView;
 import input_manager.InputManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static basic.product.ProductsControllerView.printProduct;
 
-public class OfferController {
-    private final String[] menuOptions = {"Show all products", "Find product by ID", "Find product by category ID",
-            "Insert new product", "Delete product", "Modify product", "Go to Main Menu"};
-    private InputManager inputManager = new InputManager();
-    private ProductJDBCDAOAdmin productAdmin = new ProductJDBCDAOAdmin();
-    private ProductsControllerView printProduct = new ProductsControllerView();
+public class OfferController implements RunnableController {
+    private final List<String> menuOptions = new ArrayList<>(Arrays.asList("Show all products", "Find product by ID", "Find product by category ID",
+            "Insert new product", "Delete product", "Modify product", "Go to Main Menu"));
+    private final InputManager inputManager = new InputManager();
+    private final ProductJDBCDAOAdmin productDAOAdmin;
+    private final ProductsControllerView printProduct = new ProductsControllerView();
     private boolean isRunning = true;
 
     public OfferController(ProductJDBCDAOAdmin productJDBCDAOAdmin){
+        this.productDAOAdmin = productJDBCDAOAdmin;
     }
 
+    @Override
     public void run() throws SQLException {
         isRunning = true;
         while(isRunning){
@@ -27,34 +33,33 @@ public class OfferController {
         }
 
     public int presentMenuOptions(){
-        int userDecision = inputManager.askForMenuOption(menuOptions, "Admin Menu");
-        return userDecision;
+        return inputManager.askForMenuOption(menuOptions, "Admin Menu");
     }
 
     public void reactToUserChoice(int userDecision) throws SQLException {
         if(userDecision == 1) {
-            printProduct(productAdmin.getAllProducts());
+            printProduct(productDAOAdmin.getAllProducts());
         }
         else if(userDecision == 2) {
             int id = askForProductId();
-            printProduct(productAdmin.getProductById(id));
+            printProduct(productDAOAdmin.getProductById(id));
         }
         else if(userDecision == 3) {
             int id = askForProductId();
-            printProduct(productAdmin.getProductsByCategory(id));
+            printProduct(productDAOAdmin.getProductsByCategory(id));
         }
         else if(userDecision == 4) {
             Product product = askForProductDetails();
-            productAdmin.insertNewProduct(product);
+            productDAOAdmin.insertNewProduct(product);
         }
         else if(userDecision == 5) {
             int id = askForProductId();
-            productAdmin.deleteProductById(id);
+            productDAOAdmin.deleteProductById(id);
         }
         else if (userDecision == 6){
             int id = askForProductId();
             Product product = askForProductDetails();
-            productAdmin.modifyProduct(product, id);
+            productDAOAdmin.modifyProduct(product, id);
         }
         else if(userDecision == 7) {
             isRunning = false;
@@ -67,11 +72,11 @@ public class OfferController {
         String brand = inputManager.getStringInput("Brand: ");
         Double price = inputManager.getDoubleInput("Price: ");
         int minAge = inputManager.getIntInput("Age Category: ");
-        Product product = new Product(name, categoryId, brand, price, minAge);
-        return product;
+
+        return new Product(name, categoryId, brand, price, minAge);
     }
+
     public int  askForProductId(){
-        int id = inputManager.getIntInput("Please provide product ID: ");
-        return id;
+        return inputManager.getIntInput("Please provide product ID: ");
     }
 }
