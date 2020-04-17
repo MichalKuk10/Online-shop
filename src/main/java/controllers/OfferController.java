@@ -5,11 +5,15 @@ import basic.product.ProductJDBCDAOAdmin;
 import basic.product.ProductsControllerView;
 import input_manager.InputManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static basic.product.ProductsControllerView.printProduct;
 
 public class OfferController {
-    private final String[] menuOptions = {"Show all products", "Find product by ID", "Find product by category ID",
-            "Insert new product", "Delete product", "Modify product", "Go to Main Menu"};
+    private final List<String> menuOptions = new ArrayList<>(Arrays.asList("Show all products", "Find product by ID", "Find product by category ID",
+            "Insert new product", "Delete product", "Modify product", "Go to Main Menu"));
     private final InputManager inputManager = new InputManager();
     private final ProductJDBCDAOAdmin productDAOAdmin;
     private final ProductsControllerView printProduct = new ProductsControllerView();

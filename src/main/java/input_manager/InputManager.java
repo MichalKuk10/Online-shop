@@ -3,6 +3,7 @@ package input_manager;
 import view.View;
 import view.MainControllerView;
 
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -44,14 +45,14 @@ public class InputManager {
     }
 
 
-    public int askForMenuOption(String[] menuOptions, String menuTitle) {
+    public int askForMenuOption(List<String> menuOptions, String menuTitle) {
 
         view.printMenu(menuOptions, menuTitle);
         int statNumber = getIntInput("What do you choose? Type the number:");
 
-        while (statNumber < 1 || statNumber > menuOptions.length) {
+        while (statNumber < 1 || statNumber > menuOptions.size()) {
             statNumber = getIntInput(String.format("Wrong input! type the number between 1 and %d:",
-                    menuOptions.length));
+                    menuOptions.size()));
         }
         return statNumber;
     }

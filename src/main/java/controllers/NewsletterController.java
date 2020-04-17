@@ -5,8 +5,12 @@ import basic.user.UserDAO;
 import input_manager.InputManager;
 import view.View;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class NewsletterController {
-    private final String[] menuOptions = {"Change newsletter preferences", "Back to main menu"};
+    private final List<String> menuOptions = new ArrayList<>(Arrays.asList("Change newsletter preferences", "Back to main menu"));
     private final User user;
     private final UserDAO userDAO;
     private final InputManager input;

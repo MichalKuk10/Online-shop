@@ -6,14 +6,17 @@ import view.BasketControllerView;
 import input_manager.InputManager;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class BasketController {
 
-    private Basket basket;
-    private String[] menuOptions = {"Change product quantity", "Delete product from basket", "Clear basket", "Proceed to payment", "Go back"};
-    private BasketControllerView basketcontrollerview = new BasketControllerView();
-    private InputManager inputManger = new InputManager();
-    private PurchaseController purchaseController;
+    private final Basket basket;
+    private final List<String> menuOptions = new ArrayList<>(Arrays.asList("Change product quantity", "Delete product from basket", "Clear basket", "Proceed to payment", "Go back"));
+    private final BasketControllerView view = new BasketControllerView();
+    private final InputManager inputManger = new InputManager();
+    private final PurchaseController purchaseController;
     private boolean isRunning = true;
 
     public BasketController(Basket basket, PurchaseController purchaseController){
@@ -52,7 +55,7 @@ public class BasketController {
     }
 
     public void showBasket(){
-        basketcontrollerview.showBasket(basket);
+        view.showBasket(basket);
     }
 
     public void addProduct(Product product, Integer quantity) {

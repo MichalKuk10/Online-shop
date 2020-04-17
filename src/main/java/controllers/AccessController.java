@@ -8,9 +8,12 @@ import main_controllers.MainControllerAdmin;
 import main_controllers.MainControllerClient;
 import view.View;
 
-public class AccessController {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-    private final String[] menuOptions = {"Log in", "Create new account", "Quit"};
+public class AccessController {
+    private final List<String> menuOptions = new ArrayList<>(Arrays.asList("Log in", "Create new account", "Quit"));
     private final InputManager input;
     private final View view;
     private final UserDAO userDAO;
@@ -79,9 +82,9 @@ public class AccessController {
     }
 
     private void showMenuIfEmailNotInDatabase() {
-        String[] options = {"Go to registration", "Quit"};
+        List<String> options = new ArrayList<>(Arrays.asList("Go to registration", "Quit"));
         int choice = input.askForMenuOption(options, "What would you like to do?");
-        while (choice != options.length) {
+        while (choice != options.size()) {
             choice = input.askForMenuOption(menuOptions, "What would you like to do?");
         }
         handleIfEmailNotInDatabase(choice);
@@ -110,9 +113,9 @@ public class AccessController {
     }
 
     private void showMenuIfWrongPasswordAfterPermittedAttempts() {
-        String[] options = {"Restart login process", "Quit"};
+        List<String> options = new ArrayList<>(Arrays.asList("Restart login process", "Quit"));
         int choice = input.askForMenuOption(options, "What would you like to do?");
-        while (choice != options.length) {
+        while (choice != options.size()) {
             choice = input.askForMenuOption(menuOptions, "What would you like to do?");
         }
         handleIfWrongPasswordAfterPermittedAttempts(choice);

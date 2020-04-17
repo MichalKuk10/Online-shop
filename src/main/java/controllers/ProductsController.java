@@ -2,15 +2,18 @@ package controllers;
 
 import basic.product.Product;
 import basic.product.ProductDAO;
-import basic.product.ProductJDBCDAOClient;
 import basic.product.ProductsControllerView;
 import input_manager.InputManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static basic.product.ProductsControllerView.printProduct;
 
 public class ProductsController{
-    private final String[] menuOptions = {"Show All Products", "Select Products by category",
-            "Choose product by ID", "Back to Main Menu", "Go to my basket"};
+    private final List<String> menuOptions = new ArrayList<>(Arrays.asList("Show All Products", "Select Products by category",
+            "Choose product by ID", "Back to Main Menu", "Go to my basket"));
     private final InputManager inputManager = new InputManager();
     private final ProductDAO productDAO;
     private final BasketController basketController;

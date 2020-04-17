@@ -5,6 +5,8 @@ import basic.user.User;
 import basic.user.UserDAO;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MainControllerClient extends MainController {
 
@@ -32,6 +34,7 @@ public class MainControllerClient extends MainController {
 
     @Override
     void initializeMenu() {
-        menuOptions = new String[]{"Browse products", "See your basket", "Finalize purchase", "Manage newsletter preferences", "Log out"};
+        menuOptions = new ArrayList<>(Arrays.asList("Browse products", "See your basket", "Finalize purchase",
+                "Manage newsletter preferences", "Log out"));
     }
 }

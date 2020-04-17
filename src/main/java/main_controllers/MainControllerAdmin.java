@@ -6,6 +6,8 @@ import basic.user.UserDAO;
 import controllers.OfferController;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MainControllerAdmin extends MainController {
     private OfferController offerController;
@@ -40,6 +42,7 @@ public class MainControllerAdmin extends MainController {
 
     @Override
     void initializeMenu() {
-        menuOptions = new String[]{"Browse products", "See your basket", "Finalize purchase", "Manage newsletter preferences", "Add/delete products", "Log out"};
+        menuOptions = new ArrayList<>(Arrays.asList("Browse products", "See your basket", "Finalize purchase",
+                "Manage newsletter preferences", "Add/delete products", "Log out"));
     }
 }

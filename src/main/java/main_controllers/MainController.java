@@ -7,7 +7,6 @@ import basic.product.ProductDAO;
 import basic.product.ProductJDBCDAOClient;
 import basic.user.User;
 import basic.user.UserDAO;
-import basic.user.UserJDBCDAO;
 import controllers.BasketController;
 import controllers.NewsletterController;
 import controllers.ProductsController;
@@ -15,9 +14,10 @@ import controllers.PurchaseController;
 import input_manager.InputManager;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public abstract class MainController {
-    protected String[] menuOptions;
+    protected List<String> menuOptions;
     protected final ProductsController productsController;
     protected final BasketController basketController;
     protected final PurchaseController purchaseController;
@@ -43,7 +43,7 @@ public abstract class MainController {
         try {
             int choice = input.askForMenuOption(menuOptions, "Welcome to our exclusive toy store! What do you want to do?");
             reactToUserChoice(choice);
-            while (choice != menuOptions.length) {
+            while (choice != menuOptions.size()) {
                 choice = input.askForMenuOption(menuOptions, "Welcome to our exclusive toy store! What do you want to do?");
                 reactToUserChoice(choice);
             }

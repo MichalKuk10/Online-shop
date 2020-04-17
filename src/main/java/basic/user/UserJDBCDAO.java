@@ -24,7 +24,6 @@ public class UserJDBCDAO implements UserDAO {
             statement.setString(2, user.getPassword());
 
             int i = statement.executeUpdate();
-            updateIdInUserObject(user);
 
             if (i == 1) {
                 return true;
@@ -125,20 +124,5 @@ public class UserJDBCDAO implements UserDAO {
         user.setAgreedToNewsletter(resultSet.getBoolean("newsletter_subscription"));
 
         return user;
-    }
-
-    private void updateIdInUserObject(User user) {
-        Connection connection = getConnection();
-        try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE email LIKE ?;");
-            statement.setString(1, user.getEmail());
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                int id = resultSet.getInt("user_id");
-                user.setUserId(id);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 }
