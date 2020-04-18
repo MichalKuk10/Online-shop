@@ -1,22 +1,24 @@
 package basic.product;
 
+import java.math.BigDecimal;
+
 public class Product {
 
     private Integer productId;
     private String name;
     private int categoryId;
     private String brand;
-    private double price;
+    private BigDecimal price;
     private int minAge;
 
-    public Product(String name, int categoryId, String brand, double price, int minAge) {
+    public Product(String name, int categoryId, String brand, BigDecimal price, int minAge) {
         this.name = name;
         this.categoryId = categoryId;
         this.brand = brand;
         this.price = price;
         this.minAge = minAge;
     }
-    public Product(int productId, String name, int categoryId, String brand, double price, int minAge) {
+    public Product(int productId, String name, int categoryId, String brand, BigDecimal price, int minAge) {
         this.productId = productId;
         this.name = name;
         this.categoryId = categoryId;
@@ -57,11 +59,11 @@ public class Product {
         this.brand = brand;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

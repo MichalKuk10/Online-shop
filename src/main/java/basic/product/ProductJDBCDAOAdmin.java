@@ -1,6 +1,8 @@
 package basic.product;
 
+import exceptions.MyExceptions;
 import connection.ConnectionFactory;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -18,12 +20,12 @@ public class ProductJDBCDAOAdmin implements ProductDAO {
         ResultSet rs;
 
         try {
-            PreparedStatement statement  = connection.prepareStatement("SELECT * FROM products;");
-            rs =  statement.executeQuery();
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM products;");
+            rs = statement.executeQuery();
 
             while (rs.next()) {
                 Product product = new Product(rs.getInt("product_id"), rs.getString("name"),
-                        rs.getInt("product_category_id"), rs.getString("brand_name"), rs.getDouble("price"),
+                        rs.getInt("product_category_id"), rs.getString("brand_name"), rs.getBigDecimal("price"),
                         rs.getInt("age_category"));
                 productsList.add(product);
             }
@@ -45,13 +47,13 @@ public class ProductJDBCDAOAdmin implements ProductDAO {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
 
-            while(rs.next()) {
+            while (rs.next()) {
                 product = new Product(rs.getInt("product_id"), rs.getString("name"),
-                        rs.getInt("product_category_id"), rs.getString("brand_name"), rs.getDouble("price"),
+                        rs.getInt("product_category_id"), rs.getString("brand_name"), rs.getBigDecimal("price"),
                         rs.getInt("age_category"));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Error: Please try again!");
         } finally {
             connection.close();
         }
@@ -59,7 +61,7 @@ public class ProductJDBCDAOAdmin implements ProductDAO {
     }
 
     @Override
-    public ArrayList<Product> getProductsByCategory(int categoryId) throws SQLException {
+    public ArrayList<Product> getProductsByCategory(int categoryId) throws MyExceptions, SQLException {
         Connection connection = getConnection();
         ArrayList<Product> productsList = new ArrayList<>();
 
@@ -70,17 +72,14 @@ public class ProductJDBCDAOAdmin implements ProductDAO {
 
             while (rs.next()) {
                 Product product = new Product(rs.getInt("product_id"), rs.getString("name"),
-                        rs.getInt("product_category_id"), rs.getString("brand_name"), rs.getDouble("price"),
+                        rs.getInt("product_category_id"), rs.getString("brand_name"), rs.getBigDecimal("price"),
                         rs.getInt("age_category"));
                 productsList.add(product);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-
         } finally {
             connection.close();
         }
-        return  productsList;
+        return productsList;
     }
 
     public boolean insertNewProduct(Product product) throws SQLException {
@@ -92,14 +91,13 @@ public class ProductJDBCDAOAdmin implements ProductDAO {
             statement.setInt(1, product.getCategoryId());
             statement.setString(2, product.getName());
             statement.setString(3, product.getBrand());
-            statement.setDouble(4, product.getPrice());
+            statement.setBigDecimal(4, product.getPrice());
             statement.setInt(5, product.getMinAge());
             statement.executeUpdate();
             System.out.println("This product has been added successfully to database! ");
             return true;
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Failed");
+            System.out.println("Failed to insert new product, please try again");
         } finally {
             connection.close();
         }
@@ -113,12 +111,12 @@ public class ProductJDBCDAOAdmin implements ProductDAO {
             Statement stmt = connection.createStatement();
             stmt.executeUpdate("DELETE FROM products WHERE product_id = " + id + ";");
             System.out.println("Product deleted successfully");
-            } catch (SQLException e) {
-            e.printStackTrace();
-        }finally{
+        } catch (SQLException e) {
+            System.out.println("Error: please try again");
+        } finally {
             connection.close();
         }
-        }
+    }
 
     public void modifyProduct(Product product, int id) throws SQLException {
         Connection connection = getConnection();
@@ -129,18 +127,17 @@ public class ProductJDBCDAOAdmin implements ProductDAO {
             statement.setInt(1, product.getCategoryId());
             statement.setString(2, product.getName());
             statement.setString(3, product.getBrand());
-            statement.setDouble(4, product.getPrice());
+            statement.setBigDecimal(4, product.getPrice());
             statement.setInt(5, product.getMinAge());
             statement.setInt(6, id);
             statement.executeUpdate();
             System.out.println(" Information about this product updated ");
 
         } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        finally {
+            System.out.println("Error: Please try again!");
+        } finally {
             connection.close();
         }
     }
-    }
+}
 
