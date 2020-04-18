@@ -16,7 +16,7 @@ import java.util.*;
 public class PurchaseController {
 
     private final List<String> menuOptions = new ArrayList<>(Arrays.asList("Manage delivery address",
-            "Choose delivery service", "Enter discount code", "Choose method of payment", "Proceed to payment", "Go back"));
+            "Choose delivery service", "Enter discount code", "Choose method of payment", "Proceed to payment", "Go back to basket", "Go back to products"));
     private final List<String> deliveryMethodMenu = new ArrayList<>(Arrays.asList("Personal pickup (free)", "DPD (+15,00)", "Traditional Postal Service (+10,00)", "Parcel Locker Delivery (+5,00)"));
     private final List<String> paymentMethodMenu = new ArrayList<>(Arrays.asList("Payment on personal pickup", "Bank transfer", "PayPal", "Payment on delivery"));
 
@@ -38,6 +38,7 @@ public class PurchaseController {
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private String timeOfArrival;
     private boolean isRunning = true;
+    private String goingBackDirector = "";
 
     public PurchaseController(User user, UserDAO userDAO, OrderDAO orderDAO, DiscountCodeDAO discountCodeDAO) {
         this.user = user;
@@ -49,7 +50,9 @@ public class PurchaseController {
         setDeliveryMethods();
     }
 
-    public void run() throws SQLException {
+    public String run() throws SQLException {
+        isRunning = true;
+
         this.order.setDeliveryMethod("DPD", deliveryMethods.get("DPD"));
         this.order.setPaymentMethod("Bank transfer");
 
@@ -73,12 +76,20 @@ public class PurchaseController {
                     break;
                 case 5:
                     finalisePurchase();
+                    isRunning = false;
+                    goingBackDirector = "Products menu";
                     break;
                 case 6:
                     isRunning = false;
+                    goingBackDirector = "Basket menu";
+                    break;
+                case 7:
+                    isRunning = false;
+                    goingBackDirector = "Products menu";
                     break;
             }
         }
+        return goingBackDirector;
     }
 
     private void setDeliveryMethods(){
@@ -184,7 +195,7 @@ public class PurchaseController {
 
     public void finalisePurchase() throws SQLException {
         orderDAO.insertOrder(order, user.getUserId());
-        purchaseControllerView.print("Your order has been successfully placed!\nThank you for choosing " +
-                "our exclusive Toy Store!\nWe hope to see you soon!");
+        purchaseControllerView.print("\n\nYour order has been successfully placed!\nThank you for choosing " +
+                "our exclusive Toy Store!\n\n");
     }
 }

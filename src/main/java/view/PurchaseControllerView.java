@@ -3,12 +3,15 @@ package view;
 import basic.order.Order;
 import basic.product.Product;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 public class PurchaseControllerView extends View {
+
+    DecimalFormat decimalFormat = new DecimalFormat("#.00");
 
     public PurchaseControllerView(){
     }
@@ -26,30 +29,32 @@ public class PurchaseControllerView extends View {
         Map<Product, Integer> products = order.getProducts();
         Iterator<Map.Entry<Product, Integer>> iterator = products.entrySet().iterator();
 
-        print("\n" + new String(new char[53]).replace("\0", "-") + "CHECKOUT" + new String(new char[54]).replace("\0", "-") + "\n");
-        print("------------------PRODUCT-------------------|------UNIT-PRICE------|-------QUANTITY-------|----SUMMARIC-VALUE----");
+        print("\n" + new String(new char[53]).replace("\0", "-") + "CHECKOUT" + new String(new char[53]).replace("\0", "-") + "\n");
+        print("------------------PRODUCT-------------------|------UNIT-PRICE------|-------QUANTITY-------|----SUMMARIC-VALUE-----");
 
         int i = 1;
         while(iterator.hasNext())
         {
             Map.Entry<Product, Integer> entry = iterator.next();
 
-            print(
-                    i + ". " + entry.getKey().getName() +
+            System.out.print(i + ". " + entry.getKey().getName() +
                             new String(new char[40-entry.getKey().getName().length()]).replace("\0", " ") +
-                            " | "  + new String(new char[20-Double.toString(entry.getKey().getPrice()).length()]).replace("\0", " ") +
-                            entry.getKey().getPrice() +
-                            " | "  + new String(new char[20-Integer.toString(entry.getValue()).length()]).replace("\0", " ") +
-                            entry.getValue() +
-                            " | "  + new String(new char[20-Double.toString((entry.getValue() * entry.getKey().getPrice())).length()]).replace("\0", " ") +
-                            (entry.getValue() * entry.getKey().getPrice()) + "|");
+                            " | "  + new String(new char[20-decimalFormat.format(entry.getKey().getPrice()).length()]).replace("\0", " "));
+            System.out.printf("%.2f", entry.getKey().getPrice());
+            System.out.print(" | "  + new String(new char[20-Integer.toString(entry.getValue()).length()]).replace("\0", " "));
+            System.out.print(entry.getValue());
+            System.out.print(" | "  + new String(new char[20-decimalFormat.format(entry.getValue() * entry.getKey().getPrice()).length()]).replace("\0", " "));
+            System.out.printf("%.2f", (entry.getValue() * entry.getKey().getPrice()));
+            System.out.print("|\n");
             i++;
         }
-        print(new String(new char[113]).replace("\0", "-"));
+        print(new String(new char[114]).replace("\0", "-"));
         print("TOTAL without discount : " + orderValue);
-        print("DISCOUNT : - " + order.getDiscountValue());
-        print("TOTAL : " + (orderValue - order.getDiscountValue()));
-        print(new String(new char[113]).replace("\0", "-") + "\n");
+        System.out.print("DISCOUNT : ");
+        System.out.printf("%.2f", order.getDiscountValue());
+        System.out.print("\nTOTAL : ");
+        System.out.printf("%.2f", (orderValue - order.getDiscountValue()));
+        print("\n" + new String(new char[114]).replace("\0", "-") + "\n");
     }
 
     private void printUserAddress(String shipmentAddress){
