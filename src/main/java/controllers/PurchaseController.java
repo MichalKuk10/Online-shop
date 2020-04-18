@@ -35,12 +35,11 @@ public class PurchaseController {
     private OrderDAO orderDAO;
     private UserDAO userDAO;
     private DiscountCodeDAO discountCodeDAO;
-    
     private LocalDate today = LocalDate.now();
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private String timeOfArrival;
     private boolean isRunning = true;
-    
+
     public PurchaseController(User user, UserDAO userDAO, OrderDAO orderDAO, DiscountCodeDAO discountCodeDAO) {
         this.user = user;
         this.userDAO = userDAO;

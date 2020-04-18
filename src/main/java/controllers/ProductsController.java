@@ -3,6 +3,7 @@ package controllers;
 import basic.product.Product;
 import basic.product.ProductDAO;
 import basic.product.ProductsControllerView;
+import exceptions.MyExceptions;
 import input_manager.InputManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -26,14 +27,14 @@ public class ProductsController implements RunnableController {
     }
 
     @Override
-    public void run() throws SQLException {
+    public void run() throws SQLException, MyExceptions {
         isRunning = true;
         while (isRunning) {
             int userChoice = inputManager.askForMenuOption(menuOptions, "Products Menu");
             reactToUserChoice(userChoice);
         }
     }
-    public void reactToUserChoice(int choice) throws SQLException {
+    public void reactToUserChoice(int choice) throws SQLException, MyExceptions {
         if(choice == 1){
             printProduct(productDAO.getAllProducts());
             addToBasket();
