@@ -3,7 +3,7 @@ package controllers;
 import exceptions.MyExceptions;
 import basic.product.Product;
 import basic.product.ProductJDBCDAOAdmin;
-import basic.product.ProductsControllerView;
+import view.ProductsControllerView;
 import input_manager.InputManager;
 
 import java.sql.SQLException;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static basic.product.ProductsControllerView.printProduct;
+import static view.ProductsControllerView.printProduct;
 
 public class OfferController implements RunnableController {
     private final List<String> menuOptions = new ArrayList<>(Arrays.asList("Show all products", "Find product by ID", "Find product by category ID",

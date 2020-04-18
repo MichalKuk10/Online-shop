@@ -101,13 +101,13 @@ insert into products (product_category_id, name, brand_name, age_category, price
 insert into products (product_category_id, name, brand_name, age_category, price) values (1, 'Ball pool', 'Studio 100', '2', 21.99);
 insert into products (product_category_id, name, brand_name, age_category, price) values (1, 'My first steering wheel', 'Vtech', '2', 19.90);
 insert into products (product_category_id, name, brand_name, age_category, price) values (2, 'Plush teddy bear with heart', 'LG-Imports', '2', 6.95);
-insert into products (product_category_id, name, brand_name, age_category, price) values (3, 'Watercolour set with (12 colours)', 'Grafix', '5', 1.50);
+insert into products (product_category_id, name, brand_name, age_category, price) values (3, 'Watercolour set', 'Grafix', '5', 1.50);
 insert into products (product_category_id, name, brand_name, age_category, price) values (3, 'Clay set (12 pieces)', 'Free and easy', '6', 1.20);
 insert into products (product_category_id, name, brand_name, age_category, price) values (4, 'Barbie doll', 'Barbie', '6', 23.95);
 insert into products (product_category_id, name, brand_name, age_category, price) values (4, 'Baby doll', 'Vtech', '4', 21.95);
 insert into products (product_category_id, name, brand_name, age_category, price) values (5, 'LEGO lunch set', 'LEGO', '8', 9.95);
 insert into products (product_category_id, name, brand_name, age_category, price) values (5, '3D wooden house set', 'Creotime', '12', 13.65);
-insert into products (product_category_id, name, brand_name, age_category, price) values (6, 'Farm animals (20 plastic figures)', 'Johntoy', '10', 7.35);
+insert into products (product_category_id, name, brand_name, age_category, price) values (6, 'Farm animals (20 figures)', 'Johntoy', '10', 7.35);
 insert into products (product_category_id, name, brand_name, age_category, price) values (6, 'Running Dinosaur', 'Toi-Toys', '7', 12.95);
 insert into products (product_category_id, name, brand_name, age_category, price) values (7, 'Monopoly', 'Hasbro', '12', 30);
 insert into products (product_category_id, name, brand_name, age_category, price) values (7, 'Playing cards set', 'LG-Imports', '8', 1);

@@ -2,7 +2,7 @@ package controllers;
 
 import basic.product.Product;
 import basic.product.ProductDAO;
-import basic.product.ProductsControllerView;
+import view.ProductsControllerView;
 import exceptions.MyExceptions;
 import input_manager.InputManager;
 import java.sql.SQLException;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static basic.product.ProductsControllerView.printProduct;
+import static view.ProductsControllerView.printProduct;
 
 public class ProductsController implements RunnableController {
     private final List<String> menuOptions = new ArrayList<>(Arrays.asList("Show All Products", "Select Products by category",
