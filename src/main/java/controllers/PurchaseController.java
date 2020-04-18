@@ -8,8 +8,6 @@ import input_manager.InputManager;
 import basic.user.User;
 import basic.order.Order;
 import view.PurchaseControllerView;
-
-import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -172,7 +170,7 @@ public class PurchaseController {
         while (iterator.hasNext()) {
             Map.Entry<Product, Integer> entry = iterator.next();
 
-            calculatedOrderValue += (entry.getKey().getPrice()) * entry.getValue());
+            calculatedOrderValue += (entry.getKey().getPrice()) * entry.getValue();
         }
         this.orderValue = calculatedOrderValue;
         if ((calculatedOrderValue - order.getDiscountValue()) < 0){
@@ -184,8 +182,8 @@ public class PurchaseController {
     }
 
 
-    public void finalisePurchase() {
-        //orderDAO.addOrder(order);
+    public void finalisePurchase() throws SQLException {
+        orderDAO.insertOrder(order, user.getUserId());
         purchaseControllerView.print("Your order has been successfully placed!\nThank you for choosing " +
                 "our exclusive Toy Store!\nWe hope to see you soon!");
     }
