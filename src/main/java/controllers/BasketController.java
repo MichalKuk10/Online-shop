@@ -22,7 +22,6 @@ public class BasketController implements RunnableController {
     public BasketController(Basket basket, PurchaseController purchaseController){
         this.basket = basket;
         this.purchaseController = purchaseController;
-        purchaseController.setBasket(basket);
     }
 
     @Override
@@ -48,6 +47,7 @@ public class BasketController implements RunnableController {
                 clearBasket();
                 break;
             case 4:
+                purchaseController.setBasket(basket.getproducts());
                 purchaseController.run();
                 break;
             case 5:

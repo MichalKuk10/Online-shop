@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS orders CASCADE;
 DROP TABLE IF EXISTS order_products;
 DROP TABLE IF EXISTS products;
 DROP TABLE IF EXISTS product_categories;
+DROP TABLE IF EXISTS discount_codes;
 
 CREATE TABLE users (
     user_id SERIAL PRIMARY KEY,
@@ -33,8 +34,10 @@ CREATE TABLE products (
 
 CREATE TABLE orders (
     order_id SERIAL PRIMARY KEY,
-    'date' DATE DEFAULT CURRENT_DATE,
+    "date" date,
 	user_id integer,
+	delivery_method_cost FLOAT(4),
+	discount_value FLOAT(4),
 	CONSTRAINT usersFK FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
@@ -158,6 +161,6 @@ insert into order_products (order_id, product_id, quantity) values (10, 19, 1);
 insert into order_products (order_id, product_id, quantity) values (10, 12, 2);
 insert into order_products (order_id, product_id, quantity) values (10, 14, 3);
 
-insert into discount_codes (discount_code) values ("dupa1");
-insert into discount_codes (discount_code) values ("dupa2");
-insert into discount_codes (discount_code) values ("dupa3");
+insert into discount_codes (discount_code) values ('dupa1');
+insert into discount_codes (discount_code) values ('dupa2');
+insert into discount_codes (discount_code) values ('dupa3');

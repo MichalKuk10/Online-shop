@@ -5,6 +5,7 @@ import basic.user.UserDAO;
 import input_manager.InputManager;
 import view.View;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,7 +26,7 @@ public class NewsletterController implements RunnableController {
     }
 
     @Override
-    public void run() {
+    public void run() throws SQLException {
         isRunning = true;
         while (isRunning) {
             shareCurrentPreferences();
@@ -42,7 +43,7 @@ public class NewsletterController implements RunnableController {
         }
     }
 
-    private void reactToUserChoice(int choice) {
+    private void reactToUserChoice(int choice) throws SQLException {
         switch (choice) {
             case 1:
                 user.setAgreedToNewsletter(!user.isAgreedToNewsletter());
