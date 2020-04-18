@@ -70,7 +70,7 @@ public class OfferController implements RunnableController {
         String name = inputManager.getStringInput("Product name: ");
         int categoryId = inputManager.getIntInput("Category ID: ");
         String brand = inputManager.getStringInput("Brand: ");
-        Double price = inputManager.getDoubleInput("Price: ");
+        float price = inputManager.getFloatInput("Price: ");
         int minAge = inputManager.getIntInput("Age Category: ");
 
         return new Product(name, categoryId, brand, price, minAge);

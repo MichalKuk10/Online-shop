@@ -10,6 +10,7 @@ import basic.discount_code.DiscountCodeJDBCDAO;
 import basic.user.User;
 import basic.user.UserDAO;
 import controllers.*;
+import exceptions.MyExceptions;
 import input_manager.InputManager;
 
 import java.sql.SQLException;
@@ -45,12 +46,12 @@ public abstract class MainController implements RunnableController {
                 choice = input.askForMenuOption(menuOptions, "Welcome to our exclusive toy store! What do you want to do?");
                 reactToUserChoice(choice);
             }
-        } catch (SQLException e) {
+        } catch (SQLException | MyExceptions e) {
             e.printStackTrace();
         }
     }
 
-    abstract void reactToUserChoice(int choice) throws SQLException;
+    abstract void reactToUserChoice(int choice) throws SQLException, MyExceptions;
 
     abstract void initializeMenu();
 }

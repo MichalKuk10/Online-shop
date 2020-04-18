@@ -22,6 +22,18 @@ public class InputManager {
 
         return scannerFromUser.nextLine();
     }
+    public int getFloatInput(String message) {
+        view.print(message);
+        Scanner scannerFromUser = new Scanner(System.in);
+
+        while(!scannerFromUser.hasNextFloat()){
+            view.print("Wrong input! Please insert the correct number");
+            scannerFromUser.next();
+        }
+        return (int) scannerFromUser.nextFloat();
+    }
+
+
 
     public int getIntInput(String message) {
         view.print(message);
