@@ -5,6 +5,7 @@ import basic.user.User;
 import basic.user.UserDAO;
 import controllers.OfferController;
 import controllers.RunnableController;
+import exceptions.MyExceptions;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class MainControllerAdmin extends MainController implements RunnableContr
     }
 
     @Override
-    void reactToUserChoice(int choice) throws SQLException {
+    void reactToUserChoice(int choice) throws SQLException, MyExceptions {
         switch(choice) {
             case 1:
                 productsController.run();

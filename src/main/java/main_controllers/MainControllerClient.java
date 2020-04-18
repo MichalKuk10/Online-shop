@@ -4,6 +4,7 @@ import basic.product.ProductJDBCDAOClient;
 import basic.user.User;
 import basic.user.UserDAO;
 import controllers.RunnableController;
+import exceptions.MyExceptions;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class MainControllerClient extends MainController implements RunnableCont
     }
 
     @Override
-    void reactToUserChoice(int choice) throws SQLException {
+    void reactToUserChoice(int choice) throws SQLException, MyExceptions {
         switch(choice) {
             case 1:
                 productsController.run();

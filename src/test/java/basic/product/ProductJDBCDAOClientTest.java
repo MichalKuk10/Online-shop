@@ -12,7 +12,7 @@ class ProductJDBCDAOClientTest {
     public void shouldCheckIfReturnProductById() throws SQLException {
         //given
         ProductJDBCDAOClient prod = new ProductJDBCDAOClient();
-        Product product = new Product(20, "Party hat", 10, "LG-Imports", 2,5);
+        Product product = new Product(20, "Party hat", 10, "LG-Imports", (float) 2,5);
 
         //when
         Product result  = prod.getProductById(20);

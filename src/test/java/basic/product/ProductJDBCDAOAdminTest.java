@@ -11,7 +11,7 @@ class ProductJDBCDAOAdminTest {
     public void shouldCheckIfProductAddedToDatabase() throws SQLException {
         //given
         ProductJDBCDAOAdmin prod = new ProductJDBCDAOAdmin();
-        Product product = new Product("GreenToy", 2, "Toyland", 12.22, 2);
+        Product product = new Product("GreenToy", 2, "Toyland", (float) 12.22, 2);
 
         //when
         boolean result = prod.insertNewProduct(product);
