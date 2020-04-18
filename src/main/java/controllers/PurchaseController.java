@@ -9,6 +9,7 @@ import basic.user.User;
 import basic.order.Order;
 import view.PurchaseControllerView;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

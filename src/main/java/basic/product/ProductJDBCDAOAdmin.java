@@ -25,7 +25,7 @@ public class ProductJDBCDAOAdmin implements ProductDAO {
 
             while (rs.next()) {
                 Product product = new Product(rs.getInt("product_id"), rs.getString("name"),
-                        rs.getInt("product_category_id"), rs.getString("brand_name"), rs.getBigDecimal("price"),
+                        rs.getInt("product_category_id"), rs.getString("brand_name"), rs.getFloat("price"),
                         rs.getInt("age_category"));
                 productsList.add(product);
             }
@@ -49,7 +49,7 @@ public class ProductJDBCDAOAdmin implements ProductDAO {
 
             while (rs.next()) {
                 product = new Product(rs.getInt("product_id"), rs.getString("name"),
-                        rs.getInt("product_category_id"), rs.getString("brand_name"), rs.getBigDecimal("price"),
+                        rs.getInt("product_category_id"), rs.getString("brand_name"), rs.getFloat("price"),
                         rs.getInt("age_category"));
             }
         } catch (SQLException e) {
@@ -72,7 +72,7 @@ public class ProductJDBCDAOAdmin implements ProductDAO {
 
             while (rs.next()) {
                 Product product = new Product(rs.getInt("product_id"), rs.getString("name"),
-                        rs.getInt("product_category_id"), rs.getString("brand_name"), rs.getBigDecimal("price"),
+                        rs.getInt("product_category_id"), rs.getString("brand_name"), rs.getFloat("price"),
                         rs.getInt("age_category"));
                 productsList.add(product);
             }
@@ -91,7 +91,7 @@ public class ProductJDBCDAOAdmin implements ProductDAO {
             statement.setInt(1, product.getCategoryId());
             statement.setString(2, product.getName());
             statement.setString(3, product.getBrand());
-            statement.setBigDecimal(4, product.getPrice());
+            statement.setFloat(4, product.getPrice());
             statement.setInt(5, product.getMinAge());
             statement.executeUpdate();
             System.out.println("This product has been added successfully to database! ");
@@ -127,7 +127,7 @@ public class ProductJDBCDAOAdmin implements ProductDAO {
             statement.setInt(1, product.getCategoryId());
             statement.setString(2, product.getName());
             statement.setString(3, product.getBrand());
-            statement.setBigDecimal(4, product.getPrice());
+            statement.setFloat(4, product.getPrice());
             statement.setInt(5, product.getMinAge());
             statement.setInt(6, id);
             statement.executeUpdate();
