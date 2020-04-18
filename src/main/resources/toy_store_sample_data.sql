@@ -33,18 +33,23 @@ CREATE TABLE products (
 
 CREATE TABLE orders (
     order_id SERIAL PRIMARY KEY,
-    "date" date,
+    'date' DATE DEFAULT CURRENT_DATE,
 	user_id integer,
-	CONSTRAINT andrzej FOREIGN KEY (user_id) REFERENCES users(user_id)
+	CONSTRAINT usersFK FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
 CREATE TABLE order_products (
     order_product_id SERIAL PRIMARY KEY,
     quantity integer CONSTRAINT positive_number CHECK (quantity > 0) NOT NULL ,
 	order_id integer,
-	CONSTRAINT zbigniew FOREIGN KEY (order_id)  REFERENCES orders(order_id),
+	CONSTRAINT ordersFK FOREIGN KEY (order_id)  REFERENCES orders(order_id),
     product_id integer ,
-	CONSTRAINT edward FOREIGN KEY (product_id) REFERENCES products(product_id)
+	CONSTRAINT productsFK FOREIGN KEY (product_id) REFERENCES products(product_id)
+);
+
+CREATE TABLE discount_codes (
+    discount_code_id SERIAL PRIMARY KEY,
+    discount_code character varying(255) NOT NULL
 );
 
 insert into users (email, password, first_name, last_name, phone_number, address, user_role, newsletter_subscription) values ('admin@admin.pl', 'admin1', 'Jenson', 'Patel', '27345961', 'Bramblewick, Colsterworth Road, Skillington NG33 5HF', 'admin', true);
@@ -152,3 +157,7 @@ insert into order_products (order_id, product_id, quantity) values (9, 18, 2);
 insert into order_products (order_id, product_id, quantity) values (10, 19, 1);
 insert into order_products (order_id, product_id, quantity) values (10, 12, 2);
 insert into order_products (order_id, product_id, quantity) values (10, 14, 3);
+
+insert into discount_codes (discount_code) values ("dupa1");
+insert into discount_codes (discount_code) values ("dupa2");
+insert into discount_codes (discount_code) values ("dupa3");

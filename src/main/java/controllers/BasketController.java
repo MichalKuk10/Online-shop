@@ -22,6 +22,7 @@ public class BasketController implements RunnableController {
     public BasketController(Basket basket, PurchaseController purchaseController){
         this.basket = basket;
         this.purchaseController = purchaseController;
+        purchaseController.setBasket(basket);
     }
 
     @Override
