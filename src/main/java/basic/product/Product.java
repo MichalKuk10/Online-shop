@@ -8,17 +8,17 @@ public class Product {
     private String name;
     private int categoryId;
     private String brand;
-    private BigDecimal price;
+    private Float price;
     private int minAge;
 
-    public Product(String name, int categoryId, String brand, BigDecimal price, int minAge) {
+    public Product(String name, int categoryId, String brand, Float price, int minAge) {
         this.name = name;
         this.categoryId = categoryId;
         this.brand = brand;
         this.price = price;
         this.minAge = minAge;
     }
-    public Product(int productId, String name, int categoryId, String brand, BigDecimal price, int minAge) {
+    public Product(int productId, String name, int categoryId, String brand, Float price, int minAge) {
         this.productId = productId;
         this.name = name;
         this.categoryId = categoryId;
@@ -59,11 +59,11 @@ public class Product {
         this.brand = brand;
     }
 
-    public BigDecimal getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 
