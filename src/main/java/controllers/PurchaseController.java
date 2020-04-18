@@ -13,29 +13,25 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class PurchaseController {
-    
     private String[] menuOptions = {"Manage delivery address", "Choose delivery service", "Enter discount code",
             "Choose method of payment", "Proceed to payment", "Go back"};
     private String[] deliveryMethods = {"Personal pickup  (free of charge)", "DPD (+15,00)",
             "Traditional Postal Service (+10,00)", "Parcel Locker Delivery (+5,00)"};
     private String[] paymentMethods = {"Payment on personal pickup (free of charge)", "Bank transfer (free of charge)",
             "PayPal (+2,00)", "Payment on delivery (+5,00)"};
-    
+
     private InputManager inputManger = new InputManager();
     private PurchaseControllerView purchaseControllerView = new PurchaseControllerView();
-    
     private Basket basket;
     private User user;
     private Order order;
-    
     private OrderDAO orderDAO;
     private UserDAO userDAO;
     private DiscountCodeDAO discountCodeDAO;
-    
     private LocalDate today = LocalDate.now();
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private boolean isRunning = true;
-    
+
     public PurchaseController(User user, UserDAO userDAO, OrderDAO orderDAO, DiscountCodeDAO discountCodeDAO) {
         this.user = user;
         this.userDAO = userDAO;
@@ -71,7 +67,7 @@ public class PurchaseController {
         }
     }
 
-    public void setBasket(Basket basket){
+    public void setBasket(Basket basket) {
         this.basket = basket;
     }
 

@@ -25,7 +25,7 @@ public class ProductJDBCDAOClient implements ProductDAO {
 
             while (rs.next()) {
                 Product product = new Product(rs.getInt("product_id"), rs.getString("name"),
-                        rs.getInt("product_category_id"), rs.getString("brand_name"), rs.getFloat("price"),
+                        rs.getInt("product_category_id"), rs.getString("brand_name"), rs.getBigDecimal("price"),
                         rs.getInt("age_category"));
                 productsList.add(product);
             }
@@ -46,9 +46,9 @@ public class ProductJDBCDAOClient implements ProductDAO {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM products WHERE product_id = ?");
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
-            while(rs.next()) {
+            while (rs.next()) {
                 product = new Product(rs.getInt("product_id"), rs.getString("name"),
-                        rs.getInt("product_category_id"), rs.getString("brand_name"), rs.getDouble("price"),
+                        rs.getInt("product_category_id"), rs.getString("brand_name"), rs.getBigDecimal("price"),
                         rs.getInt("age_category"));
             }
 
@@ -72,7 +72,7 @@ public class ProductJDBCDAOClient implements ProductDAO {
 
             while (rs.next()) {
                 Product product = new Product(rs.getInt("product_id"), rs.getString("name"),
-                        rs.getInt("product_category_id"), rs.getString("brand_name"), rs.getFloat("price"),
+                        rs.getInt("product_category_id"), rs.getString("brand_name"), rs.getBigDecimal("price"),
                         rs.getInt("age_category"));
                 productsList.add(product);
             }
@@ -82,6 +82,6 @@ public class ProductJDBCDAOClient implements ProductDAO {
         } finally {
             connection.close();
         }
-        return  productsList;
+        return productsList;
     }
 }
