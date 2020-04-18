@@ -101,7 +101,7 @@ public class UserJDBCDAO implements UserDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } 
+        }
         return null;
     }
 
