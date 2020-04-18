@@ -22,7 +22,7 @@ public class PurchaseController {
     private final List<String> paymentMethodMenu = new ArrayList<>(Arrays.asList("Payment on personal pickup", "Bank transfer", "PayPal", "Payment on delivery"));
 
     private Map<String, Float> deliveryMethods;
-    
+
     private InputManager inputManger = new InputManager();
     private PurchaseControllerView purchaseControllerView;
 
@@ -31,7 +31,7 @@ public class PurchaseController {
     private Float orderValue;
     private Float discountedOrderValue;
     private boolean isDiscountActive = false;
-    
+
     private OrderDAO orderDAO;
     private UserDAO userDAO;
     private DiscountCodeDAO discountCodeDAO;
@@ -171,7 +171,7 @@ public class PurchaseController {
         while (iterator.hasNext()) {
             Map.Entry<Product, Integer> entry = iterator.next();
 
-            calculatedOrderValue += entry.getKey().getPrice() * entry.getValue();
+            calculatedOrderValue += (entry.getKey().getPrice()) * entry.getValue());
         }
         this.orderValue = calculatedOrderValue;
         if ((calculatedOrderValue - order.getDiscountValue()) < 0){

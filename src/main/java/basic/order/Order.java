@@ -48,4 +48,12 @@ public class Order {
     public void setDiscountValue(float discountValue) {
         this.discountValue = discountValue;
     }
+
+    public float getDeliveryCost(){
+        float deliveryCost = 0;
+        for (float deliveryCostFromIteration : deliveryMethod.values()){
+            deliveryCost = deliveryCostFromIteration;
+        }
+        return deliveryCost;
+    }
 }
