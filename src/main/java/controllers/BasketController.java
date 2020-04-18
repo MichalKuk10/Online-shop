@@ -18,6 +18,7 @@ public class BasketController implements RunnableController {
     private final InputManager inputManger = new InputManager();
     private final PurchaseController purchaseController;
     private boolean isRunning = true;
+    private String goingBackDirector = "";
 
     public BasketController(Basket basket, PurchaseController purchaseController){
         this.basket = basket;
@@ -35,7 +36,7 @@ public class BasketController implements RunnableController {
         }
     }
 
-    public void reactToUserChoice(Integer userChoice) throws SQLException {
+    public String reactToUserChoice(Integer userChoice) throws SQLException {
         switch (userChoice) {
             case 1:
                 changeProductQuantity();
@@ -48,12 +49,16 @@ public class BasketController implements RunnableController {
                 break;
             case 4:
                 purchaseController.setBasket(basket.getproducts());
-                purchaseController.run();
+                goingBackDirector = purchaseController.run();
+                if(goingBackDirector == "Products menu"){
+                        isRunning = false;
+                }
                 break;
             case 5:
                 isRunning = false;
                 break;
         }
+        return goingBackDirector;
     }
 
     public void showBasket(){

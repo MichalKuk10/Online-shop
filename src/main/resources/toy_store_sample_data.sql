@@ -34,7 +34,7 @@ CREATE TABLE products (
 
 CREATE TABLE orders (
     order_id SERIAL PRIMARY KEY,
-    "date" date,
+    "date" DATE NOT NULL DEFAULT CURRENT_DATE,
 	user_id integer,
 	delivery_method_cost FLOAT(4),
 	discount_value FLOAT(4),
@@ -100,7 +100,6 @@ insert into product_categories (name) values ('party');
 insert into products (product_category_id, name, brand_name, age_category, price) values (1, 'Teetcher for babies', 'Vtech', '1', 16.95);
 insert into products (product_category_id, name, brand_name, age_category, price) values (1, 'Ball pool', 'Studio 100', '2', 21.99);
 insert into products (product_category_id, name, brand_name, age_category, price) values (1, 'My first steering wheel', 'Vtech', '2', 19.90);
-insert into products (product_category_id, name, brand_name, age_category, price) values (2, 'Plush red heart', 'LG-Imports', '2', 0.95);
 insert into products (product_category_id, name, brand_name, age_category, price) values (2, 'Plush teddy bear with heart', 'LG-Imports', '2', 6.95);
 insert into products (product_category_id, name, brand_name, age_category, price) values (3, 'Watercolour set with (12 colours)', 'Grafix', '5', 1.50);
 insert into products (product_category_id, name, brand_name, age_category, price) values (3, 'Clay set (12 pieces)', 'Free and easy', '6', 1.20);

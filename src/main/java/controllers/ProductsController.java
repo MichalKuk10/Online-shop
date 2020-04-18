@@ -61,7 +61,6 @@ public class ProductsController implements RunnableController {
             int prodID = inputManager.getIntInput("Please provide product ID");
             int quantity = inputManager.getIntInput("How many?");
             Product product = productDAO.getProductById(prodID);
-            System.out.println(product);
             basketController.addProduct(product, quantity);
         }
     }
