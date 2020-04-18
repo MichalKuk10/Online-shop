@@ -8,6 +8,7 @@ import main_controllers.MainControllerAdmin;
 import main_controllers.MainControllerClient;
 import view.View;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,7 +27,7 @@ public class AccessController implements RunnableController {
     }
 
     @Override
-    public void run() {
+    public void run() throws SQLException {
         isRunning = true;
         while (isRunning) {
             int choice = input.askForMenuOption(menuOptions, "Welcome to our exclusive toy store! What do you want to do?");
@@ -34,7 +35,7 @@ public class AccessController implements RunnableController {
         }
     }
 
-    private void reactToUserChoice(int number) {
+    private void reactToUserChoice(int number) throws SQLException {
         switch(number) {
             case 1:
                 coordinateLoginProcess();
@@ -48,7 +49,7 @@ public class AccessController implements RunnableController {
         }
     }
 
-    private void coordinateLoginProcess() {
+    private void coordinateLoginProcess() throws SQLException {
         String email = input.askForEmail();
         String password = input.askForPassword();
 
@@ -64,7 +65,7 @@ public class AccessController implements RunnableController {
         runRightControllerForUser(user);
     }
 
-    private void coordinateRegistrationProcess() {
+    private void coordinateRegistrationProcess() throws SQLException {
         String email = input.askForEmail();
 
         if (userDAO.checkIfEmailInDatabase(email)) {
@@ -82,7 +83,7 @@ public class AccessController implements RunnableController {
         coordinateLoginProcess();
     }
 
-    private void showMenuIfEmailNotInDatabase() {
+    private void showMenuIfEmailNotInDatabase() throws SQLException {
         List<String> options = new ArrayList<>(Arrays.asList("Go to registration", "Quit"));
         int choice = input.askForMenuOption(options, "What would you like to do?");
         while (choice != options.size()) {
@@ -91,7 +92,7 @@ public class AccessController implements RunnableController {
         handleIfEmailNotInDatabase(choice);
     }
 
-    private void handleIfEmailNotInDatabase(int choice) {
+    private void handleIfEmailNotInDatabase(int choice) throws SQLException {
         switch(choice) {
             case 1:
                 coordinateRegistrationProcess();
@@ -101,7 +102,7 @@ public class AccessController implements RunnableController {
         }
     }
 
-    private String handleWrongPassword(String email, String password) {
+    private String handleWrongPassword(String email, String password) throws SQLException {
         int count = 0;
         while (!userDAO.checkIfPasswordMatchesEmail(email, password) && count <= 5) {
             password = input.askForPassword();
@@ -113,7 +114,7 @@ public class AccessController implements RunnableController {
         return password;
     }
 
-    private void showMenuIfWrongPasswordAfterPermittedAttempts() {
+    private void showMenuIfWrongPasswordAfterPermittedAttempts() throws SQLException {
         List<String> options = new ArrayList<>(Arrays.asList("Restart login process", "Quit"));
         int choice = input.askForMenuOption(options, "What would you like to do?");
         while (choice != options.size()) {
@@ -122,7 +123,7 @@ public class AccessController implements RunnableController {
         handleIfWrongPasswordAfterPermittedAttempts(choice);
     }
 
-    private void handleIfWrongPasswordAfterPermittedAttempts(int choice) {
+    private void handleIfWrongPasswordAfterPermittedAttempts(int choice) throws SQLException {
         switch(choice) {
             case 1:
                 run();
@@ -132,7 +133,7 @@ public class AccessController implements RunnableController {
         }
     }
 
-    private void comparePasswords(String password1, String password2) {
+    private void comparePasswords(String password1, String password2) throws SQLException {
         if (!password1.equals(password2)) {
             view.print("Your passwords don't match. Your registration process will be restarted!");
             coordinateRegistrationProcess();

@@ -3,6 +3,7 @@ package input_manager;
 import view.View;
 import view.MainControllerView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -44,6 +45,13 @@ public class InputManager {
         return scannerFromUser.nextDouble();
     }
 
+    public ArrayList<String> getMultipleStringInput(String[] messages) {
+        ArrayList<String> userInputs = new ArrayList<>();
+        for (String message : messages){
+            userInputs.add(getStringInput(message));
+        }
+        return userInputs;
+    }
 
     public int askForMenuOption(List<String> menuOptions, String menuTitle) {
 

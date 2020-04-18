@@ -2,7 +2,10 @@ package view;
 
 import basic.order.Order;
 import basic.product.Product;
+
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 public class PurchaseControllerView extends View {
@@ -10,19 +13,20 @@ public class PurchaseControllerView extends View {
     public PurchaseControllerView(){
     }
     
-    public void showPurchaseScreen(Order order, String[] deliveryServiceOptions, String[] paymentOptions){
-        printProducts(order);
-        printDiscountCode(order.getDiscountStatus());
-        printUserAddress(order.getShipmentAddress());
-        printChosenDeliveryService(deliveryServiceOptions, order.getDeliveryMethod());
-        printChosenPaymentOption(paymentOptions, order.getPaymentMethod());
+    public void showPurchaseScreen(Order order, Map<String, Float> deliveryMethods, List<String> paymentMethods, boolean isDiscountActive, String userAddress, Float orderValue, String timeOfArrival){
+        printProducts(order, orderValue);
+        printDiscountStatus(isDiscountActive);
+        printUserAddress(userAddress + "\n");
+        indicateChosenDeliveryMethod(deliveryMethods, order.getDeliveryMethod());
+        print("Estimated time of delivery: " + timeOfArrival + "\n");
+        indicateChosenPaymentMethod(paymentMethods, order.getPaymentMethod());
     }
 
-    private void printProducts(Order order){
+    private void printProducts(Order order, Float orderValue){
         Map<Product, Integer> products = order.getProducts();
         Iterator<Map.Entry<Product, Integer>> iterator = products.entrySet().iterator();
 
-        print(new String(new char[53]).replace("\0", "-") + "CHECKOUT" + new String(new char[54]).replace("\0", "-") + "\n");
+        print("\n" + new String(new char[53]).replace("\0", "-") + "CHECKOUT" + new String(new char[54]).replace("\0", "-") + "\n");
         print("------------------PRODUCT-------------------|------UNIT-PRICE------|-------QUANTITY-------|----SUMMARIC-VALUE----");
 
         int i = 1;
@@ -42,7 +46,9 @@ public class PurchaseControllerView extends View {
             i++;
         }
         print(new String(new char[113]).replace("\0", "-"));
-        print("TOTAL : " + order.getValue());
+        print("TOTAL without discount : " + orderValue);
+        print("DISCOUNT : - " + order.getDiscountValue());
+        print("TOTAL : " + (orderValue - order.getDiscountValue()));
         print(new String(new char[113]).replace("\0", "-") + "\n");
     }
 
@@ -51,7 +57,7 @@ public class PurchaseControllerView extends View {
         print(shipmentAddress);
     }
 
-    private void printDiscountCode(boolean isDiscounted){
+    private void printDiscountStatus(boolean isDiscounted){
         print("Discount status: ");
         if (isDiscounted){
             System.out.print("Activated!");
@@ -59,39 +65,48 @@ public class PurchaseControllerView extends View {
         else{
             System.out.print("Not active");
         }
+        print("\n");
     }
 
-    private void printChosenDeliveryService(String[] deliveryServiceOptions, String chosenDeliveryOption){
+    private void indicateChosenDeliveryMethod(Map<String, Float> deliveryMethods, Map<String, Float> chosenDeliveryMethod){
         print("Your chosen delivery method: ");
-            int i = 0;
-            switch (chosenDeliveryOption) {
-                case "Personal pickup":
-                    i = 1;
-                    break;
-                case "DPD":
-                    i = 2;
-                    break;
-                case "Traditional Postal Service":
-                    i = 3;
-                    break;
-                case "Parcel Locker Delivery":
-                    i = 4;
-                    break;
-            }
-            int y = 0;
-        for (String deliveryMethod : deliveryServiceOptions){
-            String arrow = "";
-            if (y == i-1){
-                arrow = "=>";
-            }
-            System.out.print(new String(new char[2-arrow.length()] + arrow + deliveryMethod + "\n"));
-        }
-    }
 
-    private void printChosenPaymentOption(String[] paymentOptions, String chosenPaymentOption){
+        Map.Entry<String, Float> entry = chosenDeliveryMethod.entrySet().iterator().next();
+        String chosenDeliveryMethodName = entry.getKey();
+        int i = 0;
+        switch (chosenDeliveryMethodName) {
+            case "Personal pickup":
+                i = 1;
+                break;
+            case "DPD":
+                i = 2;
+                break;
+            case "Traditional Postal Service":
+                i = 3;
+                break;
+            case "Parcel Locker Delivery":
+                i = 4;
+                break;
+        }
+        int y = 0;
+
+        Iterator<Map.Entry<String, Float>> iterator = deliveryMethods.entrySet().iterator();
+
+        while(iterator.hasNext()){
+                Map.Entry<String, Float> entry2 = iterator.next();
+                String arrow = "";
+                if (y == i-1){
+                    arrow = "=>";
+                }
+                System.out.print(new String(new char[3-arrow.length()]).replace("\0", " ") + arrow + " " + entry2.getKey() + " " + entry2.getValue() + "\n");
+                y++;
+            }
+        }
+
+    private void indicateChosenPaymentMethod(List<String> paymentMethods, String chosenPaymentMethod){
         print("Your chosen payment method: ");
         int i = 0;
-        switch (chosenPaymentOption) {
+        switch (chosenPaymentMethod) {
             case "Payment on personal pickup":
                 i = 1;
                 break;
@@ -106,12 +121,14 @@ public class PurchaseControllerView extends View {
                 break;
         }
         int y = 0;
-        for (String deliveryMethod : paymentOptions){
+        for (String paymentMethod : paymentMethods){
             String arrow = "";
             if (y == i-1){
                 arrow = "=>";
             }
-            System.out.print(new String(new char[2-arrow.length()] + arrow + deliveryMethod + "\n"));
+            System.out.print(new String(new char[3-arrow.length()]).replace("\0", " ") + arrow + " " + paymentMethod + "\n");
+
+            y++;
         }
     }
 }
